@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FoodieApp - Your Ultimate Food Hub</title>
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- FontAwesome CDN for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="bg-gray-50">
+  <!-- Top Bar -->
+  <div class="bg-gray-800 text-white py-2 px-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <a href="#" class="text-sm hover:text-orange-300"><i class="fas fa-phone-alt mr-1"></i> +1-234-567-8900</a>
+        <a href="#" class="text-sm hover:text-orange-300"><i class="fas fa-envelope mr-1"></i> info@foodieapp.com</a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="#" class="text-sm hover:text-orange-300"><i class="fas fa-newspaper mr-1"></i> Subscribe</a>
+        <button id="dark-mode-toggle" class="text-sm hover:text-orange-300"><i class="fas fa-moon mr-1"></i> Dark Mode</button>
+        <div class="relative">
+          <select class="bg-gray-700 text-white text-sm rounded px-2 py-1 focus:outline-none">
+            <option value="en">English</option>
+            <option value="ur">Urdu</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="bg-white text-gray-800 p-4 sticky top-0 z-10 shadow-md">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
+      <div class="flex items-center">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMjQiIGZpbGw9IiNmYTc5MmIiLz4KPHBhdGggZD0iTTE2IDMyQzE2IDI1IDE5IDE2IDI1IDE2QzMxIDE2IDM0IDI1IDM0IDMyIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiLz4KPGNpcmNsZSBjeD0iMjUiIGN5PSIyMiIgcj0iMyIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE4IDMySDMyIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+" alt="FoodieApp Logo" class="h-10 w-10 mr-3">
+        <a href="#" class="text-2xl font-bold text-orange-500" onclick="showTab('home'); return false;">FoodieApp</a>
+      </div>
+      <button class="lg:hidden" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars text-gray-800" id="menu-icon"></i>
+      </button>
+      <div class="hidden lg:flex space-x-6 items-center">
+        <a href="#" class="hover:text-orange-500 font-medium" onclick="showTab('home'); return false;">Home</a>
+        
+        <div class="dropdown relative">
+          <a href="#" class="hover:text-orange-500 font-medium flex items-center" onclick="return false;">
+            Recipes <i class="fas fa-chevron-down ml-1 text-xs"></i>
+          </a>
+          <div class="dropdown-content">
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Breakfast</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Lunch</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Dinner</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Snacks</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Desserts</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Drinks</a>
+          </div>
+        </div>
+        
+        <div class="dropdown relative">
+          <a href="#" class="hover:text-orange-500 font-medium flex items-center" onclick="return false;">
+            Categories <i class="fas fa-chevron-down ml-1 text-xs"></i>
+          </a>
+          <div class="dropdown-content">
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Pakistani Dishes</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Continental</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Street Food</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Quick & Easy</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Ramadan Specials</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Kids Lunch Box</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-100 hover:text-orange-500">Festive Foods</a>
+          </div>
+        </div>
+        
+        <a href="#" class="hover:text-orange-500 font-medium" onclick="showTab('videos'); return false;">Videos</a>
+        <a href="#" class="hover:text-orange-500 font-medium" onclick="showTab('tips'); return false;">Tips & Tricks</a>
+        <a href="#" class="hover:text-orange-500 font-medium" onclick="showTab('about'); return false;">About Us</a>
+        <a href="#" class="hover:text-orange-500 font-medium" onclick="showTab('contact'); return false;">Contact</a>
+        
+        <a href="#" class="hover:text-orange-500 font-medium ml-6" onclick="showTab('menu'); return false;">Order Food</a>
+        
+        <a href="#" class="ml-4 relative" onclick="showTab('cart'); return false;">
+          <i class="fas fa-shopping-cart text-xl hover:text-orange-500"></i>
+          <span id="cart-count" class="absolute -top-2 -right-2 bg-orange-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
+        </a>
+        
+        <div class="relative ml-4">
+          <input type="text" placeholder="Search..." class="py-1 px-3 pr-8 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+          <button class="absolute right-0 top-0 h-full px-2 text-gray-500">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="mobile-menu" class="lg:hidden mt-4 space-y-2 hidden">
+      <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500" onclick="showTab('home'); toggleMobileMenu(); return false;">Home</a>
+      <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500" onclick="toggleMobileSubmenu('recipes-submenu'); return false;">
+        Recipes <i class="fas fa-chevron-down ml-1 text-xs"></i>
+      </a>
+      <div id="recipes-submenu" class="pl-4 hidden">
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Breakfast</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Lunch</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Dinner</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Snacks</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Desserts</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Drinks</a>
+      </div>
+      
+      <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500" onclick="toggleMobileSubmenu('categories-submenu'); return false;">
+        Categories <i class="fas fa-chevron-down ml-1 text-xs"></i>
+      </a>
+      <div id="categories-submenu" class="pl-4 hidden">
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Pakistani Dishes</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Continental</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Street Food</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Quick & Easy</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Ramadan Specials</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Kids Lunch Box</a>
+        <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500">Festive Foods</a>
+      </div>
+      
+      <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500" onclick="showTab('videos'); toggleMobileMenu(); return false;">Videos</a>
+      <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500" onclick="showTab('tips'); toggleMobileMenu(); return false;">Tips & Tricks</a>
+      <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500" onclick="showTab('about'); toggleMobileMenu(); return false;">About Us</a>
+      <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500" onclick="showTab('contact'); toggleMobileMenu(); return false;">Contact</a>
+      <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500" onclick="showTab('menu'); toggleMobileMenu(); return false;">Order Food</a>
+      <a href="#" class="block p-2 hover:bg-orange-100 hover:text-orange-500" onclick="showTab('cart'); toggleMobileMenu(); return false;">Cart</a>
+      
+      <div class="p-2">
+        <input type="text" placeholder="Search..." class="w-full py-2 px-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+      </div>
+    </div>
+  </nav>
+
+  <!-- Home Tab -->
+  <div id="home-tab" class="tab-content active-tab">
+    <section class="bg-gradient-to-r from-orange-500 to-yellow-500 py-16 text-white">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col-reverse lg:flex-row items-center">
+          <div class="lg:w-1/2 mt-8 lg:mt-0">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">
+              Discover Delicious Food Recipes
+            </h1>
+            <p class="text-lg mb-8">
+              Find amazing recipes, cooking videos, and order your favorite meals all in one place!
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <button class="bg-white text-orange-500 px-6 py-3 rounded-full font-bold hover:bg-orange-100">
+                Explore Recipes
+              </button>
+              <button class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-orange-500" onclick="showTab('menu'); return false;">
+                Order Now
+              </button>
+            </div>
+          </div>
+          <div class="lg:w-1/2">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjI1MCIgY3k9IjI1MCIgcj0iMjQwIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC44Ii8+CjxjaXJjbGUgY3g9IjI1MCIgY3k9IjI1MCIgcj0iMTkwIiBmaWxsPSIjRkZGOEYzIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTc1LDE1MCAyMDAsMTAwIDI1MCw3NSAzMDAsMTAwIDMyNSwxNTAgMzAwLDIwMCAyNTAsMjI1IDIwMCwyMDAgMTc1LDE1MCIgZmlsbD0iI0ZGRDdBNSIvPgo8Y2lyY2xlIGN4PSIxNzAiIGN5PSIzMDAiIHI9IjcwIiBmaWxsPSIjRkZCNTgwIi8+CjxjaXJjbGUgY3g9IjMzMCIgY3k9IjMwMCIgcj0iNzAiIGZpbGw9IiNGRjhCNTIiLz4KPGNpcmNsZSBjeD0iMjUwIiBjeT0iMzgwIiByPSI3MCIgZmlsbD0iI0ZGNkEzRCIvPgo8cGF0aCBkPSJNIDI1MCAxNzAgQyAyNzAgMTkwIDI5MCAxNzAgMzEwIDE5MCBDIDMzMCAyMTAgMzEwIDIzMCAzMzAgMjUwIEMgMzUwIDI3MCAzMzAgMjkwIDM1MCAzMTAgQyAzNzAgMzMwIDM1MCAzNTAgMzcwIDM3MCIgc3Ryb2tlPSIjRkZEQ0IyIiBzdHJva2Utd2lkdGg9IjYiIGZpbGw9Im5vbmUiLz4KPHBhdGggZD0iTSAxNTAgMTkwIEMgMTcwIDIxMCAxOTAgMTkwIDIxMCAyMTAgQyAyMzAgMjMwIDIxMCAyNTAgMjMwIDI3MCBDIDI1MCAyOTAgMjMwIDMxMCAyNTAgMzMwIEMgMjcwIDM1MCAyNTAgMzcwIDI3MCAzOTAiIHN0cm9rZT0iI0ZGRENGMiIgc3Ryb2tlLXdpZHRoPSI2IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" alt="Food illustration" class="w-full max-w-md mx-auto">
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="py-12">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">
+          Most Popular Categories
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <a href="#" class="bg-white rounded-lg shadow-md overflow-hidden text-center hover:shadow-lg transition-shadow">
+            <div class="h-40 bg-orange-100 flex items-center justify-center">
+              <i class="fas fa-utensils text-5xl text-orange-500"></i>
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Pakistani Dishes</h3>
+              <p class="text-sm text-gray-600">30+ Recipes</p>
+            </div>
+          </a>
+          <a href="#" class="bg-white rounded-lg shadow-md overflow-hidden text-center hover:shadow-lg transition-shadow">
+            <div class="h-40 bg-green-100 flex items-center justify-center">
+              <i class="fas fa-hamburger text-5xl text-green-500"></i>
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Street Food</h3>
+              <p class="text-sm text-gray-600">25+ Recipes</p>
+            </div>
+          </a>
+          <a href="#" class="bg-white rounded-lg shadow-md overflow-hidden text-center hover:shadow-lg transition-shadow">
+            <div class="h-40 bg-blue-100 flex items-center justify-center">
+              <i class="fas fa-ice-cream text-5xl text-blue-500"></i>
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Desserts</h3>
+              <p class="text-sm text-gray-600">40+ Recipes</p>
+            </div>
+          </a>
+          <a href="#" class="bg-white rounded-lg shadow-md overflow-hidden text-center hover:shadow-lg transition-shadow">
+            <div class="h-40 bg-purple-100 flex items-center justify-center">
+              <i class="fas fa-glass-cheers text-5xl text-purple-500"></i>
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Drinks</h3>
+              <p class="text-sm text-gray-600">20+ Recipes</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+    
+    <section class="py-12 bg-gray-100">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold">
+            Featured Recipes
+          </h2>
+          <a href="#" class="text-orange-500 font-semibold hover:underline mt-4 md:mt-0">
+            View All Recipes →
+          </a>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden food-card">
+            <div class="relative">
+              <div class="h-48 bg-gray-300 flex items-center justify-center">
+                <span class="text-gray-600 font-bold text-xl">Chicken Biryani</span>
+              </div>
+              <div class="absolute top-0 left-0 bg-orange-500 text-white px-3 py-1 rounded-br-lg">
+                <i class="fas fa-star mr-1"></i> 4.9
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="text-xl font-semibold">Chicken Biryani</h3>
+                <span class="text-gray-600"><i class="far fa-clock mr-1"></i> 45 min</span>
+              </div>
+              <p class="text-gray-600 mb-4">Traditional Pakistani rice dish with aromatic spices and tender chicken.</p>
+              <div class="flex justify-between items-center">
+                <span class="text-orange-500 font-medium">By Chef Farah</span>
+                <a href="#" class="text-blue-500 hover:underline">View Recipe</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden food-card">
+            <div class="relative">
+              <div class="h-48 bg-gray-300 flex items-center justify-center">
+                <span class="text-gray-600 font-bold text-xl">Beef Kebabs</span>
+              </div>
+              <div class="absolute top-0 left-0 bg-orange-500 text-white px-3 py-1 rounded-br-lg">
+                <i class="fas fa-star mr-1"></i> 4.7
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="text-xl font-semibold">Beef Kebabs</h3>
+                <span class="text-gray-600"><i class="far fa-clock mr-1"></i> 30 min</span>
+              </div>
+              <p class="text-gray-600 mb-4">Juicy grilled beef kebabs with a perfect blend of Pakistani spices.</p>
+              <div class="flex justify-between items-center">
+                <span class="text-orange-500 font-medium">By Chef Ahmed</span>
+                <a href="#" class="text-blue-500 hover:underline">View Recipe</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden food-card">
+            <div class="relative">
+              <div class="h-48 bg-gray-300 flex items-center justify-center">
+                <span class="text-gray-600 font-bold text-xl">Gulab Jamun</span>
+              </div>
+              <div class="absolute top-0 left-0 bg-orange-500 text-white px-3 py-1 rounded-br-lg">
+                <i class="fas fa-star mr-1"></i> 4.8
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="text-xl font-semibold">Gulab Jamun</h3>
+                <span class="text-gray-600"><i class="far fa-clock mr-1"></i> 40 min</span>
+              </div>
+              <p class="text-gray-600 mb-4">Sweet, soft milk solids balls soaked in rose-flavored sugar syrup.</p>
+              <div class="flex justify-between items-center">
+                <span class="text-orange-500 font-medium">By Chef Laila</span>
+                <a href="#" class="text-blue-500 hover:underline">View Recipe</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="py-12">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-2">
+          Chef's Corner
+        </h2>
+        <p class="text-center text-gray-600 mb-8">Special recipes from our expert chefs</p>
+        
+        <div class="flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="md:w-1/2 bg-gray-200 flex items-center justify-center min-h-[300px]">
+            <span class="text-gray-600 font-bold text-2xl">Chef Profile Image</span>
+          </div>
+          <div class="md:w-1/2 p-8">
+            <h3 class="text-2xl font-bold mb-2">Meet Chef Sarah</h3>
+            <p class="text-gray-600 mb-4">
+              With over 15 years of experience in Pakistani cuisine, Chef Sarah brings authentic flavors and innovative twists to traditional recipes.
+            </p>
+            <p class="text-gray-600 mb-6">
+              "I believe food should tell a story and connect us to our heritage while exploring new possibilities."
+            </p>
+            <a href="#" class="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 inline-block">
+              View Chef's Recipes
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="py-12 bg-gray-100">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-2">
+          Cooking Videos
+        </h2>
+        <p class="text-center text-gray-600 mb-8">Learn with step-by-step visual guides</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden food-card">
+            <div class="relative">
+              <div class="h-48 bg-gray-300 flex items-center justify-center">
+                <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="bg-white bg-opacity-80 rounded-full h-14 w-14 flex items-center justify-center">
+                    <i class="fas fa-play text-orange-500 text-2xl"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- Continuing from where the code was cut off -->
+            <div class="p-4">
+                <h3 class="text-lg font-semibold">How to Make Perfect Chicken Karahi</h3>
+                <p class="text-gray-600 text-sm mb-2">Chef Ahmed shows you his secret recipe</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 text-sm"><i class="far fa-eye mr-1"></i> 28K views</span>
+                  <span class="text-gray-500 text-sm"><i class="far fa-clock mr-1"></i> 8:45</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md overflow-hidden food-card">
+              <div class="relative">
+                <div class="h-48 bg-gray-300 flex items-center justify-center">
+                  <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="bg-white bg-opacity-80 rounded-full h-14 w-14 flex items-center justify-center">
+                      <i class="fas fa-play text-orange-500 text-2xl"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Homemade Naan Bread Tutorial</h3>
+                <p class="text-gray-600 text-sm mb-2">Easy method for fluffy naan at home</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 text-sm"><i class="far fa-eye mr-1"></i> 15K views</span>
+                  <span class="text-gray-500 text-sm"><i class="far fa-clock mr-1"></i> 6:20</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md overflow-hidden food-card">
+              <div class="relative">
+                <div class="h-48 bg-gray-300 flex items-center justify-center">
+                  <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="bg-white bg-opacity-80 rounded-full h-14 w-14 flex items-center justify-center">
+                      <i class="fas fa-play text-orange-500 text-2xl"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">5 Pakistani Breakfast Ideas</h3>
+                <p class="text-gray-600 text-sm mb-2">Quick and nutritious morning meals</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 text-sm"><i class="far fa-eye mr-1"></i> 32K views</span>
+                  <span class="text-gray-500 text-sm"><i class="far fa-clock mr-1"></i> 12:30</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center mt-8">
+            <a href="#" class="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 inline-block" onclick="showTab('videos'); return false;">
+              View All Videos
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+
+<!-- Continuing with more sections for Home tab -->
+<section class="py-12">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-2">
+        Subscribe to Our Newsletter
+      </h2>
+      <p class="text-center text-gray-600 mb-8">Get weekly recipes and cooking tips delivered to your inbox</p>
+      
+      <div class="max-w-md mx-auto">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <form>
+            <div class="mb-4">
+              <input type="text" placeholder="Your Name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+            <div class="mb-4">
+              <input type="email" placeholder="Your Email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+            <button type="submit" class="w-full bg-orange-500 text-white font-semibold py-3 rounded-lg hover:bg-orange-600">
+              Subscribe Now
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="py-12 bg-orange-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-2">
+        What Our Users Say
+      </h2>
+      <p class="text-center text-gray-600 mb-8">Testimonials from food lovers like you</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="flex items-center mb-4">
+            <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center">
+              <i class="fas fa-user text-gray-500"></i>
+            </div>
+            <div class="ml-4">
+              <h4 class="font-semibold">Ayesha Khan</h4>
+              <div class="text-orange-500">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-600">
+            "FoodieApp has transformed my cooking! The recipes are easy to follow and always turn out perfect. My family is impressed with my new skills!"
+          </p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="flex items-center mb-4">
+            <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center">
+              <i class="fas fa-user text-gray-500"></i>
+            </div>
+            <div class="ml-4">
+              <h4 class="font-semibold">Farhan Ahmed</h4>
+              <div class="text-orange-500">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-600">
+            "The food delivery service is amazing! Fast, hot food and exactly as described. I've tried many dishes and haven't been disappointed yet."
+          </p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="flex items-center mb-4">
+            <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center">
+              <i class="fas fa-user text-gray-500"></i>
+            </div>
+            <div class="ml-4">
+              <h4 class="font-semibold">Sana Malik</h4>
+              <div class="text-orange-500">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-600">
+            "The video tutorials made it so easy for me to learn traditional recipes. I especially love the tips and tricks section. Highly recommended!"
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Videos Tab -->
+<div id="videos-tab" class="tab-content">
+  <section class="py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl font-bold mb-8">Cooking Videos</h1>
+      
+      <div class="mb-8">
+        <div class="relative rounded-xl overflow-hidden shadow-lg">
+          <div class="h-96 bg-gray-300 flex items-center justify-center">
+            <span class="text-gray-600 font-bold text-3xl">Featured Video</span>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="bg-white bg-opacity-80 rounded-full h-20 w-20 flex items-center justify-center">
+                <i class="fas fa-play text-orange-500 text-3xl"></i>
+              </span>
+            </div>
+          </div>
+          <div class="p-6 bg-white">
+            <h2 class="text-2xl font-bold mb-2">Special Eid Recipes: Complete Menu</h2>
+            <p class="text-gray-600 mb-4">Learn how to prepare a complete Eid feast with these traditional recipes</p>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500"><i class="far fa-eye mr-1"></i> 105K views</span>
+              <span class="text-gray-500"><i class="far fa-clock mr-1"></i> 28:45</span>
+              <span class="text-orange-500 font-medium">By Chef Zainab</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <h2 class="text-2xl font-bold mb-6">Recent Videos</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Video Card 1 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden food-card">
+          <div class="relative">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="bg-white bg-opacity-80 rounded-full h-14 w-14 flex items-center justify-center">
+                  <i class="fas fa-play text-orange-500 text-2xl"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">How to Make Perfect Nihari</h3>
+            <p class="text-gray-600 text-sm mb-2">Traditional slow-cooked stew recipe</p>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500 text-sm"><i class="far fa-eye mr-1"></i> 42K views</span>
+              <span class="text-gray-500 text-sm"><i class="far fa-clock mr-1"></i> 15:20</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Video Card 2 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden food-card">
+          <div class="relative">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="bg-white bg-opacity-80 rounded-full h-14 w-14 flex items-center justify-center">
+                  <i class="fas fa-play text-orange-500 text-2xl"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Easy Samosa Folding Technique</h3>
+            <p class="text-gray-600 text-sm mb-2">Master the perfect samosa shape</p>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500 text-sm"><i class="far fa-eye mr-1"></i> 36K views</span>
+              <span class="text-gray-500 text-sm"><i class="far fa-clock mr-1"></i> 8:45</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Video Card 3 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden food-card">
+          <div class="relative">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="bg-white bg-opacity-80 rounded-full h-14 w-14 flex items-center justify-center">
+                  <i class="fas fa-play text-orange-500 text-2xl"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Authentic Chicken Korma</h3>
+            <p class="text-gray-600 text-sm mb-2">Rich and creamy traditional curry</p>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500 text-sm"><i class="far fa-eye mr-1"></i> 28K views</span>
+              <span class="text-gray-500 text-sm"><i class="far fa-clock mr-1"></i> 10:30</span>
+            </div>
+          </div>
+        </div>
+      </div> 
+      
+      <!-- Video Categories -->
+      <h2 class="text-2xl font-bold mb-6">Video Categories</h2>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <a href="#" class="bg-white rounded-lg p-4 text-center shadow hover:shadow-md">
+          <div class="h-16 w-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-2">
+            <i class="fas fa-utensils text-red-500 text-xl"></i>
+          </div>
+          <h3 class="font-medium">Main Dishes</h3>
+          <p class="text-sm text-gray-500">24 videos</p>
+        </a>
+        
+        <a href="#" class="bg-white rounded-lg p-4 text-center shadow hover:shadow-md">
+          <div class="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-2">
+            <i class="fas fa-bread-slice text-green-500 text-xl"></i>
+          </div>
+          <h3 class="font-medium">Breads</h3>
+          <p class="text-sm text-gray-500">12 videos</p>
+        </a>
+        
+        <a href="#" class="bg-white rounded-lg p-4 text-center shadow hover:shadow-md">
+          <div class="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-2">
+            <i class="fas fa-cookie text-blue-500 text-xl"></i>
+          </div>
+          <h3 class="font-medium">Desserts</h3>
+          <p class="text-sm text-gray-500">18 videos</p>
+        </a>
+        
+        <a href="#" class="bg-white rounded-lg p-4 text-center shadow hover:shadow-md">
+          <div class="h-16 w-16 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-2">
+            <i class="fas fa-pepper-hot text-purple-500 text-xl"></i>
+          </div>
+          <h3 class="font-medium">Quick Recipes</h3>
+          <p class="text-sm text-gray-500">30 videos</p>
+
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Tips & Tricks Tab -->
+<div id="tips-tab" class="tab-content">
+    <section class="py-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold mb-8">Cooking Tips & Tricks</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-6">
+              <h2 class="text-2xl font-bold mb-4">Kitchen Essentials</h2>
+              <p class="text-gray-600 mb-4">
+                Every Pakistani kitchen should have these essential tools and ingredients to prepare authentic dishes with ease.
+              </p>
+              <ul class="space-y-2 mb-4">
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span>A good quality pressure cooker for quick cooking of lentils and meat</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span>Cast iron or heavy-bottomed karahi (wok) for authentic taste</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span>Wooden spoons to avoid scratching cookware</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span>Spice box (masala dabba) with essential spices</span>
+                </li>
+              </ul>
+              <a href="#" class="text-orange-500 font-medium hover:underline">Read full guide →</a>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-6">
+              <h2 class="text-2xl font-bold mb-4">Spice Blending Tips</h2>
+              <p class="text-gray-600 mb-4">
+                Master the art of blending spices for perfect Pakistani flavors every time.
+              </p>
+              <ul class="space-y-2 mb-4">
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span>Toast whole spices before grinding to enhance flavor</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span>Store ground spices in airtight containers away from direct sunlight</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span>Add garam masala at the end of cooking for maximum aroma</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span>Balance flavors with the right proportion of sweet, sour, and savory spices</span>
+                </li>
+              </ul>
+              <a href="#" class="text-orange-500 font-medium hover:underline">Read full guide →</a>
+            </div>
+          </div>
+        </div>
+        
+        <h2 class="text-2xl font-bold mb-6">Latest Tips & Articles</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold text-xl">Tip Image</span>
+            </div>
+            <div class="p-4">
+              <span class="text-xs text-orange-500 font-semibold uppercase tracking-wider">Food Preparation</span>
+              <h3 class="text-lg font-semibold my-2">10 Ways to Make Your Rice Perfect Every Time</h3>
+              <p class="text-gray-600 text-sm mb-4">Learn the secrets to fluffy, non-sticky rice for your biryani and pulao dishes.</p>
+              <a href="#" class="text-blue-500 hover:underline">Read More</a>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold text-xl">Tip Image</span>
+            </div>
+            <div class="p-4">
+              <span class="text-xs text-orange-500 font-semibold uppercase tracking-wider">Kitchen Hacks</span>
+              <h3 class="text-lg font-semibold my-2">Time-Saving Tips for Busy Weeknight Cooking</h3>
+              <p class="text-gray-600 text-sm mb-4">Quick meal prep ideas and shortcuts for delicious meals in less time.</p>
+              <a href="#" class="text-blue-500 hover:underline">Read More</a>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold text-xl">Tip Image</span>
+            </div>
+            <div class="p-4">
+              <span class="text-xs text-orange-500 font-semibold uppercase tracking-wider">Techniques</span>
+              <h3 class="text-lg font-semibold my-2">Mastering the Art of Tandoori Cooking at Home</h3>
+              <p class="text-gray-600 text-sm mb-4">How to achieve authentic tandoori flavors without a clay oven.</p>
+              <a href="#" class="text-blue-500 hover:underline">Read More</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-orange-50 rounded-xl p-8 mb-10">
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/3 mb-6 md:mb-0">
+              <h3 class="text-2xl font-bold mb-2">Cooking Tip of the Day</h3>
+              <p class="text-gray-600">
+                "When making curry, fry your onions until they're golden brown for the richest base flavor. This simple step transforms your dish!"
+              </p>
+              <p class="text-orange-500 font-medium mt-2">- Chef Adeel</p>
+            </div>
+            <div class="md:w-2/3 md:pl-8">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-white rounded-lg p-4 shadow">
+                  <div class="text-center mb-2">
+                    <i class="fas fa-fire text-orange-500 text-2xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-center">Control Your Heat</h4>
+                  <p class="text-sm text-gray-600 text-center">Know when to use high heat vs. slow simmer</p>
+                </div>
+                
+                <div class="bg-white rounded-lg p-4 shadow">
+                  <div class="text-center mb-2">
+                    <i class="fas fa-clock text-orange-500 text-2xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-center">Timing is Key</h4>
+                  <p class="text-sm text-gray-600 text-center">When to add different ingredients matters</p>
+                </div>
+                
+                <div class="bg-white rounded-lg p-4 shadow">
+                  <div class="text-center mb-2">
+                    <i class="fas fa-balance-scale text-orange-500 text-2xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-center">Taste as You Go</h4>
+                  <p class="text-sm text-gray-600 text-center">Adjust seasonings throughout cooking</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- About Us Tab -->
+  <div id="about-tab" class="tab-content">
+    <section class="py-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold mb-8">About FoodieApp</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-10">
+          <div class="md:flex">
+            <div class="md:w-1/2 bg-gray-200 flex items-center justify-center min-h-[300px]">
+              <span class="text-gray-600 font-bold text-2xl">Team Image</span>
+            </div>
+            <div class="md:w-1/2 p-8">
+              <h2 class="text-2xl font-bold mb-4">Our Story</h2>
+              <p class="text-gray-600 mb-4">
+                FoodieApp was founded in 2020 with a simple mission: to preserve and share authentic Pakistani recipes while making them accessible to everyone, regardless of their cooking experience.
+              </p>
+              <p class="text-gray-600 mb-4">
+                What started as a small recipe blog has grown into a comprehensive platform featuring hundreds of recipes, cooking videos, and a food delivery service that brings authentic flavors right to your doorstep.
+              </p>
+              <p class="text-gray-600">
+                Our team of passionate chefs and food enthusiasts is dedicated to testing and perfecting every recipe before it reaches you.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <h2 class="text-2xl font-bold mb-6">Meet Our Team</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold">Chef Photo</span>
+            </div>
+            <div class="p-4">
+              <h3 class="font-bold text-lg">Ahmed Khan</h3>
+              <p class="text-orange-500 mb-2">Founder & Head Chef</p>
+              <p class="text-gray-600 text-sm mb-4">
+                With 20+ years of experience in Pakistani cuisine, Ahmed brings authenticity to every recipe.
+              </p>
+              <div class="flex justify-center space-x-3">
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold">Chef Photo</span>
+            </div>
+            <div class="p-4">
+              <h3 class="font-bold text-lg">Sana Malik</h3>
+              <p class="text-orange-500 mb-2">Content Director</p>
+              <p class="text-gray-600 text-sm mb-4">
+                Sana ensures all recipes are easy to follow with her background in food writing and styling.
+              </p>
+              <div class="flex justify-center space-x-3">
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold">Chef Photo</span>
+            </div>
+            <div class="p-4">
+              <h3 class="font-bold text-lg">Farooq Ahmed</h3>
+              <p class="text-orange-500 mb-2">Video Producer</p>
+              <p class="text-gray-600 text-sm mb-4">
+                Farooq creates engaging cooking tutorials that make complex recipes simple to understand.
+              </p>
+              <div class="flex justify-center space-x-3">
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold">Chef Photo</span>
+            </div>
+            <div class="p-4">
+              <h3 class="font-bold text-lg">Aisha Karim</h3>
+              <p class="text-orange-500 mb-2">Pastry Chef</p>
+              <p class="text-gray-600 text-sm mb-4">
+                Specializing in both traditional Pakistani and fusion desserts, Aisha brings sweetness to our platform.
+              </p>
+              <div class="flex justify-center space-x-3">
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-orange-50 rounded-lg p-8 mb-10">
+          <h2 class="text-2xl font-bold mb-6 text-center">Our Mission & Values</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg p-6 shadow">
+              <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-utensils text-orange-500 text-2xl"></i>
+              </div>
+              <h3 class="font-bold text-lg text-center mb-2">Authenticity</h3>
+              <p class="text-gray-600 text-center">
+                We are committed to preserving authentic flavors and traditional cooking methods while making them accessible for modern kitchens.
+              </p>
+            </div>
+            
+            <div class="bg-white rounded-lg p-6 shadow">
+              <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-hands-helping text-orange-500 text-2xl"></i>
+              </div>
+              <h3 class="font-bold text-lg text-center mb-2">Community</h3>
+              <p class="text-gray-600 text-center">
+                We believe food brings people together. Our platform fosters a community of food lovers sharing their passion and experiences.
+              </p>
+            </div>
+            
+            <div class="bg-white rounded-lg p-6 shadow">
+              <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-seedling text-orange-500 text-2xl"></i>
+              </div>
+              <h3 class="font-bold text-lg text-center mb-2">Sustainability</h3>
+              <p class="text-gray-600 text-center">
+                We promote sustainable cooking practices, seasonal ingredients, and minimize food waste through smart meal planning.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- Contact Tab -->
+  <div id="contact-tab" class="tab-content">
+    <section class="py-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold mb-8">Contact Us</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div>
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+              <h2 class="text-2xl font-bold mb-4">Send Us a Message</h2>
+              <form>
+                <div class="mb-4">
+                  <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+                  <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                
+                <div class="mb-4">
+                  <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                  <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                
+                <div class="mb-4">
+                  <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+                  <select id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <option value="">Select a subject</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="support">Technical Support</option>
+                    <option value="business">Business Proposal</option>
+                  </select>
+                </div>
+                
+                <div class="mb-4">
+                  <label for="message" class="block text-gray-700 font-medium mb-2">Your Message</label>
+                  <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                </div>
+                
+                <button type="submit" class="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600">
+                  Send Message
+                </button>
+              </form>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h3 class="text-xl font-bold mb-4">Frequently Asked Questions</h3>
+              
+              <div class="space-y-4">
+                <div>
+                  <h4 class="font-semibold text-lg">How can I contribute a recipe?</h4>
+                  <p class="text-gray-600">You can submit your recipe through our "Submit Recipe" form. Our team will review it and may feature it on our platform.</p>
+                </div>
+                
+                <div>
+                  <h4 class="font-semibold text-lg">Do you offer cooking classes?</h4>
+                  <p class="text-gray-600">Yes! We offer both online and in-person cooking classes in selected cities. Check our Events section for upcoming classes.</p>
+                </div>
+                
+                <div>
+                  <h4 class="font-semibold text-lg">How do I report a technical issue?</h4>
+                  <p class="text-gray-600">Please contact our support team at support@foodieapp.com with details about the issue you're experiencing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+              <h2 class="text-2xl font-bold mb-4">Our Location</h2>
+              <div class="h-64 bg-gray-300 mb-4 flex items-center justify-center">
+                <span class="text-gray-600 font-bold">Map Location</span>
+              </div>
+              
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center mr-3">
+                    <i class="fas fa-map-marker-alt text-orange-500"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Office Address</h4>
+                    <p class="text-gray-600">123 Food Street, Gulberg III, Lahore, Pakistan</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center mr-3">
+                    <i class="fas fa-phone-alt text-orange-500"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Phone Number</h4>
+                    <p class="text-gray-600">+92-321-1234567</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center mr-3">
+                    <i class="fas fa-envelope text-orange-500"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Email Address</h4>
+                    <p class="text-gray-600">info@foodieapp.com</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center mr-3">
+                    <i class="fas fa-clock text-orange-500"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Business Hours</h4>
+                    <p class="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    <p class="text-gray-600">Saturday: 10:00 AM - 4:00 PM</p>
+                    <p class="text-gray-600">Sunday: Closed</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h3 class="text-xl font-bold mb-4">Connect With Us</h3>
+              
+              <div class="flex space-x-4 mb-6">
+                <a href="#" class="h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="h-12 w-12 rounded-full bg-pink-600 text-white flex items-center justify-center hover:bg-pink-700">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="h-12 w-12 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700">
+                  <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" class="h-12 w-12 rounded-full bg-blue-400 text-white flex items-center justify-center hover:bg-blue-500">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              </div>
+              
+              <div class="bg-gray-100 rounded-lg p-4">
+                <h4 class="font-semibold mb-2">Subscribe to our Newsletter</h4>
+                <div class="flex">
+                  <input type="email" placeholder="Your email address" class="flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                  <button class="bg-orange-500 text-white px-4 py-2 rounded-r-lg font-semibold hover:bg-orange-600">
+                    Subscribe
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- Menu Tab (Order Food) -->
+  <div id="menu-tab" class="tab-content">
+    <section class="py-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold mb-8">Order Food</h1>
+        
+        <div class="flex flex-col lg:flex-row gap-8">
+          <div class="lg:w-3/4">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+              <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Our Menu</h2>
+                
+                <div class="relative">
+                  <select class="bg-orange-50 border border-orange-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <option value="all">All Categories</option>
+                    <option value="main">Main Dishes</option>
+                    <option value="appetizers">Appetizers</option>
+                    <option value="bread">Breads</option>
+                    <option value="desserts">Desserts</option>
+                    <option value="drinks">Drinks</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="space-y-6">
+                <!-- Menu Category 1 -->
+                <div>
+                  <h3 class="text-xl font-bold mb-4 text-orange-500">Main Dishes</h3>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Menu Item 1 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                      <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                        <span class="text-gray-500">Img</span>
+                      </div>
+                      <div class="flex-grow">
+                        <div class="flex justify-between">
+                          <h4 class="font-semibold">Chicken Biryani</h4>
+                          <span class="font-bold">Rs. 350</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Aromatic rice with tender chicken and spices</p>
+                        <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                          Add to Cart <i class="fas fa-plus-circle"></i>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                      <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                        <span class="text-gray-500">Img</span>
+                      </div>
+                      <div class="flex-grow">
+                        <div class="flex justify-between">
+                          <h4 class="font-semibold">Beef Karahi</h4>
+                          <span class="font-bold">Rs. 550</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                        <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                          Add to Cart <i class="fas fa-plus-circle"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                        <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                          <span class="text-gray-500">Img</span>
+                        </div>
+                        <div class="flex-grow">
+                          <div class="flex justify-between">
+                            <h4 class="font-semibold">Beef Karahi</h4>
+                            <span class="font-bold">Rs. 550</span>
+                          </div>
+                          <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                          <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                            Add to Cart <i class="fas fa-plus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                        <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                          <span class="text-gray-500">Img</span>
+                        </div>
+                        <div class="flex-grow">
+                          <div class="flex justify-between">
+                            <h4 class="font-semibold">Beef Karahi</h4>
+                            <span class="font-bold">Rs. 550</span>
+                          </div>
+                          <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                          <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                            Add to Cart <i class="fas fa-plus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                        <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                          <span class="text-gray-500">Img</span>
+                        </div>
+                        <div class="flex-grow">
+                          <div class="flex justify-between">
+                            <h4 class="font-semibold">Beef Karahi</h4>
+                            <span class="font-bold">Rs. 550</span>
+                          </div>
+                          <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                          <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                            Add to Cart <i class="fas fa-plus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                        <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                          <span class="text-gray-500">Img</span>
+                        </div>
+                        <div class="flex-grow">
+                          <div class="flex justify-between">
+                            <h4 class="font-semibold">Beef Karahi</h4>
+                            <span class="font-bold">Rs. 550</span>
+                          </div>
+                          <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                          <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                            Add to Cart <i class="fas fa-plus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                        <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                          <span class="text-gray-500">Img</span>
+                        </div>
+                        <div class="flex-grow">
+                          <div class="flex justify-between">
+                            <h4 class="font-semibold">Beef Karahi</h4>
+                            <span class="font-bold">Rs. 550</span>
+                          </div>
+                          <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                          <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                            Add to Cart <i class="fas fa-plus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                        <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                          <span class="text-gray-500">Img</span>
+                        </div>
+                        <div class="flex-grow">
+                          <div class="flex justify-between">
+                            <h4 class="font-semibold">Beef Karahi</h4>
+                            <span class="font-bold">Rs. 550</span>
+                          </div>
+                          <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                          <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                            Add to Cart <i class="fas fa-plus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                        <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                          <span class="text-gray-500">Img</span>
+                        </div>
+                        <div class="flex-grow">
+                          <div class="flex justify-between">
+                            <h4 class="font-semibold">Beef Karahi</h4>
+                            <span class="font-bold">Rs. 550</span>
+                          </div>
+                          <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                          <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                            Add to Cart <i class="fas fa-plus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                        <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                          <span class="text-gray-500">Img</span>
+                        </div>
+                        <div class="flex-grow">
+                          <div class="flex justify-between">
+                            <h4 class="font-semibold">Beef Karahi</h4>
+                            <span class="font-bold">Rs. 550</span>
+                          </div>
+                          <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                          <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                            Add to Cart <i class="fas fa-plus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Menu Item 2 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                        <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                          <span class="text-gray-500">Img</span>
+                        </div>
+                        <div class="flex-grow">
+                          <div class="flex justify-between">
+                            <h4 class="font-semibold">Beef Karahi</h4>
+                            <span class="font-bold">Rs. 550</span>
+                          </div>
+                          <p class="text-sm text-gray-600 mb-2">Spicy beef dish cooked in a traditional wok</p>
+                          <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                            Add to Cart <i class="fas fa-plus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                    
+                    <!-- Menu Item 3 -->
+                    <div class="flex items-center border border-gray-200 rounded-lg p-4 hover:bg-orange-50">
+                      <div class="h-20 w-20 bg-gray-200 rounded flex items-center justify-center mr-4">
+                        <span class="text-gray-500">Img</span>
+                      </div>
+                      <div class="flex-grow">
+                        <div class="flex justify-between">
+                          <h4 class="font-semibold">Butter Chicken</h4>
+                          <span class="font-bold">Rs. 450</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Creamy tomato-based curry with tender chicken</p>p>
+                            <button class="add-to-cart text-orange-500 text-sm font-medium hover:underline">
+                                Add to Cart <i class="fas fa-plus-circle"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <script src="foodieapp.js"></script>
+                        </body>
+                        </html>
+

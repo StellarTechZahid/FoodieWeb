@@ -1,0 +1,92 @@
+/* General Body Style */
+body {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Food Card Hover Effect */
+  .food-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Smooth Scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Tab Content */
+  .tab-content {
+    display: none;
+  }
+  
+  .active-tab {
+    display: block;
+  }
+  
+  /* Dropdown Menu */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10;
+    border-radius: 8px;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Checkout Steps */
+  .checkout-step {
+    display: none;
+  }
+  
+  .current-step {
+    display: block;
+  }
+  
+  /* Dark Mode Styles */
+  .dark-mode {
+    background-color: #1a1a1a;
+    color: #f5f5f5;
+  }
+  
+  .dark-mode .bg-white {
+    background-color: #2d2d2d;
+    color: #f5f5f5;
+  }
+  
+  .dark-mode .bg-gray-100 {
+    background-color: #333333;
+    color: #f5f5f5;
+  }
+  
+  .dark-mode .bg-gray-50 {
+    background-color: #2a2a2a;
+    color: #f5f5f5;
+  }
+  
+  .dark-mode .text-gray-600,
+  .dark-mode .text-gray-800 {
+    color: #d1d1d1;
+  }
+  
+  .dark-mode .border-gray-300 {
+    border-color: #4a4a4a;
+  }
+  
+  .dark-mode input, 
+  .dark-mode select {
+    background-color: #3d3d3d;
+    color: #f5f5f5;
+    border-color: #5a5a5a;
+  }
+  
+  .dark-mode .food-card,
+  .dark-mode .bg-white.shadow {
+    background-color: #3d3d3d;
+    color: #f5f5f5;
+  }
+  
