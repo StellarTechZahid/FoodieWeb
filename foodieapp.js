@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     checkUserColorScheme();
 });
 
+
 /**
  * Initialize all event listeners for the app
  */
@@ -453,6 +454,8 @@ function filterMenuByCategory(category) {
         }
     });
 }
+
+
 
 /**
  * Search functionality

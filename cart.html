@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - Desi Food Restaurant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+  <header class="bg-orange-500 text-white shadow-md">
+    <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="/index.html" class="text-2xl font-bold">Desi Food Restaurant</a>
+      <div class="flex items-center">
+        <a href="#index.html" class="text-white hover:text-orange-300 mr-4">Menu</a>
+        <a href="cart.html" class="text-white hover:text-orange-300 flex items-center">
+          <i class="fas fa-shopping-cart mr-2"></i>
+          Cart (<span id="cart-count">0</span>)
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Your Cart</h1>
+    
+    <div id="cart-empty" class="hidden text-center text-gray-600">
+      <p class="text-lg">Your cart is empty.</p>
+      <a href="#Order food" class="text-orange-500 hover:underline">Return to Menu</a>
+    </div>
+
+    <div id="cart-content" class="space-y-4">
+      <!-- Cart items will be dynamically inserted here -->
+    </div>
+
+    <div id="cart-summary" class="mt-8 bg-white p-6 rounded-lg shadow-md hidden">
+      <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+      <div class="flex justify-between mb-2">
+        <span>Subtotal</span>
+        <span id="subtotal">Rs. 0</span>
+      </div>
+      <div class="flex justify-between mb-2">
+        <span>Tax (10%)</span>
+        <span id="tax">Rs. 0</span>
+      </div>
+      <div class="flex justify-between font-bold text-lg">
+        <span>Total</span>
+        <span id="total">Rs. 0</span>
+      </div>
+      <button id="checkout-btn" class="mt-4 w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600">
+        Proceed to Checkout
+      </button>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 text-white py-6">
+    <div class="container mx-auto px-4 text-center">
+      <p>© 2025 Desi Food Restaurant. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function renderCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartContent = document.getElementById('cart-content');
+      const cartEmpty = document.getElementById('cart-empty');
+      const cartSummary = document.getElementById('cart-summary');
+      const subtotalElement = document.getElementById('subtotal');
+      const taxElement = document.getElementById('tax');
+      const totalElement = document.getElementById('total');
+      const cartCountElement = document.getElementById('cart-count');
+
+      if (cart.length === 0) {
+        cartEmpty.classList.remove('hidden');
+        cartContent.innerHTML = '';
+        cartSummary.classList.add('hidden');
+        cartCountElement.textContent = '0';
+        return;
+      }
+
+      cartEmpty.classList.add('hidden');
+      cartSummary.classList.remove('hidden');
+      cartContent.innerHTML = '';
+
+      let subtotal = 0;
+      let totalQuantity = 0;
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+        totalQuantity += item.quantity;
+
+        const cartItem = document.createElement('div');
+        cartItem.className = 'flex items-center justify-between bg-white p-4 rounded-lg shadow-md';
+        cartItem.innerHTML = `
+          <div class="flex items-center">
+            <div class="h-16 w-16 bg-gray-200 rounded mr-4">
+              <img src="https://images.unsplash.com/photo-1672477179695-7276b0602fa9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="${item.name}" class="h-full w-full object-cover rounded">
+            </div>
+            <div>
+              <h3 class="font-semibold">${item.name}</h3>
+              <p class="text-sm text-gray-600">Rs. ${item.price.toFixed(2)}</p>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <button class="decrement-qty text-gray-500 hover:text-orange-500" data-index="${index}">
+              <i class="fas fa-minus"></i>
+            </button>
+            <span class="mx-2">${item.quantity}</span>
+            <button class="increment-qty text-gray-500 hover:text-orange-500" data-index="${index}">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button class="remove-item text-red-500 hover:text-red-700 ml-4" data-index="${index}">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        `;
+        cartContent.appendChild(cartItem);
+      });
+
+      const tax = subtotal * 0.1;
+      const total = subtotal + tax;
+
+      subtotalElement.textContent = `Rs. ${subtotal.toFixed(2)}`;
+      taxElement.textContent = `Rs. ${tax.toFixed(2)}`;
+      totalElement.textContent = `Rs. ${total.toFixed(2)}`;
+      cartCountElement.textContent = totalQuantity;
+    }
+
+    // Update quantity (increment/decrement)
+    document.addEventListener('click', function (e) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const index = e.target.closest('button')?.dataset.index;
+
+      if (e.target.closest('.increment-qty')) {
+        cart[index].quantity += 1;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+      }
+
+      if (e.target.closest('.decrement-qty')) {
+        if (cart[index].quantity > 1) {
+          cart[index].quantity -= 1;
+        } else {
+          cart.splice(index, 1);
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+      }
+
+      if (e.target.closest('.remove-item')) {
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+      }
+    });
+
+    // Placeholder checkout functionality
+    document.getElementById('checkout-btn').addEventListener('click', function () {
+      alert('Proceeding to checkout (placeholder).');
+    });
+
+    // Render cart on page load
+    document.addEventListener('DOMContentLoaded', renderCart);
+  </script>
+</body>
+</html>
