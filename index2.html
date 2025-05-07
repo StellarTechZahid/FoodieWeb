@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FoodieApp - Food Selling App & Blog</title>
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- FontAwesome CDN for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50">
+  <!-- Top Banner with Language and Dark Mode -->
+  <div class="bg-orange-500 text-white py-2">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <a href="tel:+921234567890" class="text-sm hover:text-gray-200">
+          <i class="fas fa-phone mr-1"></i> +92 123 456 7890
+        </a>
+        <a href="mailto:info@foodieapp.com" class="text-sm hover:text-gray-200">
+          <i class="fas fa-envelope mr-1"></i> info@foodieapp.com
+        </a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center">
+          <button id="dark-mode-toggle" class="text-sm hover:text-gray-200">
+            <i class="fas fa-moon mr-1"></i> <span id="dark-mode-text">Dark Mode</span>
+          </button>
+        </div>
+        <div class="flex items-center space-x-2 text-sm">
+          <button onclick="changeLanguage('en')" class="hover:text-gray-200 font-medium">EN</button>
+          <span>|</span>
+          <button onclick="changeLanguage('ur')" class="hover:text-gray-200">UR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="bg-white text-gray-800 p-4 shadow-md sticky top-0 z-10">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
+      <div class="flex items-center">
+        <a href="#" class="text-2xl font-bold flex items-center" onclick="showTab('home'); return false;">
+          <span class="text-orange-500"><i class="fas fa-utensils mr-2"></i></span>
+          <span>FoodieApp</span>
+        </a>
+      </div>
+      <div class="hidden lg:flex space-x-6 items-center">
+        <a href="#" class="hover:text-orange-500" onclick="showTab('home'); return false;">Home</a>
+        
+        <div class="dropdown relative">
+          <a href="#" class="hover:text-orange-500">Recipes</a>
+          <div class="dropdown-content">
+            <a href="breakfast.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('recipes'); filterRecipes('breakfast'); return false;">Breakfast</a>
+            <a href="lunch.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('recipes'); filterRecipes('lunch'); return false;">Lunch</a>
+            <a href="dinner.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('recipes'); filterRecipes('dinner'); return false;">Dinner</a>
+            <a href="snacks.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('recipes'); filterRecipes('snacks'); return false;">Snacks</a>
+            <a href="desserts.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('recipes'); filterRecipes('desserts'); return false;">Desserts</a>
+            <a href="drinks.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('recipes'); filterRecipes('drinks'); return false;">Drinks</a>
+          </div>
+        </div>
+        
+        <div class="dropdown relative">
+          <a href="#" class="hover:text-orange-500">Categories</a>
+          <div class="dropdown-content">
+            <a href="Pakistani.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('categories'); filterCategories('pakistani'); return false;">Pakistani</a>
+            <a href="Continental" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('categories'); filterCategories('continental'); return false;">Continental</a>
+            <a href="Street Food.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('categories'); filterCategories('street'); return false;">Street Food</a>
+            <a href="Quick & Easy.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('categories'); filterCategories('quick'); return false;">Quick & Easy</a>
+            <a href="Ramadan Specials.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('categories'); filterCategories('ramadan'); return false;">Ramadan Specials</a>
+            <a href="Kids Lunch Box.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('categories'); filterCategories('kids'); return false;">Kids Lunch Box</a>
+            <a href="Festive Foods.html" class="block px-4 py-2 hover:bg-orange-100" onclick="showTab('categories'); filterCategories('festive'); return false;">Festive Foods</a>
+          </div>
+        </div>
+        
+        <a href="#LatestVideos" class="hover:text-orange-500" onclick="showTab('videos'); return false;">Videos</a>
+        <a href="#Chef's Corner" class="hover:text-orange-500" onclick="showTab('tips'); return false;">Tips & Tricks</a>
+        <a href="#Blog" class="hover:text-orange-500" onclick="showTab('blog'); return false;">Blog</a>
+        <a href="#About Us" class="hover:text-orange-500" onclick="showTab('about'); return false;">About Us</a>
+        <a href="#Contact" class="hover:text-orange-500" onclick="showTab('contact'); return false;">Contact</a>
+        <a href="#Order Food" class="hover:text-orange-500" onclick="showTab('menu'); return false;">Order Food</a>
+        <a href="#" class="hover:text-orange-500" onclick="showTab('cart'); return false;">
+          <i class="fas fa-shopping-cart"></i> <span id="cart-count">(0)</span>
+        </a>
+      </div>
+      
+      <div class="lg:hidden flex items-center">
+        <button id="mobile-menu-button">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+      
+      <div class="hidden lg:flex items-center ml-4">
+        <div class="relative">
+          <input type="text" placeholder="Search recipes..." class="px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+          <button class="absolute right-0 top-0 h-full px-3 text-orange-500">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <button class="ml-4 bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 text-sm">
+          Subscribe <i class="fas fa-bell ml-1"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden mt-4 pb-2">
+    <div class="flex flex-col space-y-2">
+      <a href="#home" class="block py-2 hover:text-orange-500" onclick="showTab('home'); closeMobileMenu(); return false;">Home</a>
+      <a href="#recipes" class="block py-2 hover:text-orange-500" onclick="toggleSubMenu('recipes-submenu'); return false;">
+        Recipes <i class="fas fa-chevron-down ml-1"></i>
+      </a>
+      <div id="recipes-submenu" class="hidden pl-4 space-y-1 my-1">
+        <a href="#breakfast" class="block py-1 hover:text-orange-500" onclick="showTab('recipes'); filterRecipes('breakfast'); closeMobileMenu(); return false;">Breakfast</a>
+        <a href="#lunch" class="block py-1 hover:text-orange-500" onclick="showTab('recipes'); filterRecipes('lunch'); closeMobileMenu(); return false;">Lunch</a>
+        <a href="#dinner" class="block py-1 hover:text-orange-500" onclick="showTab('recipes'); filterRecipes('dinner'); closeMobileMenu(); return false;">Dinner</a>
+        <a href="#snacks" class="block py-1 hover:text-orange-500" onclick="showTab('recipes'); filterRecipes('snacks'); closeMobileMenu(); return false;">Snacks</a>
+        <a href="#desserts" class="block py-1 hover:text-orange-500" onclick="showTab('recipes'); filterRecipes('desserts'); closeMobileMenu(); return false;">Desserts</a>
+        <a href="#drinks" class="block py-1 hover:text-orange-500" onclick="showTab('recipes'); filterRecipes('drinks'); closeMobileMenu(); return false;">Drinks</a>
+      </div>
+      
+      <a href="#categories" class="block py-2 hover:text-orange-500" onclick="toggleSubMenu('categories-submenu'); return false;">
+        Categories <i class="fas fa-chevron-down ml-1"></i>
+      </a>
+      <div id="categories-submenu" class="hidden pl-4 space-y-1 my-1">
+        <a href="#pakistani" class="block py-1 hover:text-orange-500" onclick="showTab('categories'); filterCategories('pakistani'); closeMobileMenu(); return false;">Pakistani</a>
+        <a href="#continental" class="block py-1 hover:text-orange-500" onclick="showTab('categories'); filterCategories('continental'); closeMobileMenu(); return false;">Continental</a>
+        <a href="#street-food" class="block py-1 hover:text-orange-500" onclick="showTab('categories'); filterCategories('street'); closeMobileMenu(); return false;">Street Food</a>
+        <a href="#quick-easy" class="block py-1 hover:text-orange-500" onclick="showTab('categories'); filterCategories('quick'); closeMobileMenu(); return false;">Quick & Easy</a>
+        <a href="#ramadan-specials" class="block py-1 hover:text-orange-500" onclick="showTab('categories'); filterCategories('ramadan'); closeMobileMenu(); return false;">Ramadan Specials</a>
+        <a href="#kids-lunch-box" class="block py-1 hover:text-orange-500" onclick="showTab('categories'); filterCategories('kids'); closeMobileMenu(); return false;">Kids Lunch Box</a>
+        <a href="#festive-foods" class="block py-1 hover:text-orange-500" onclick="showTab('categories'); filterCategories('festive'); closeMobileMenu(); return false;">Festive Foods</a>
+      </div>
+      
+      <a href="#LatestVideos" class="hover:text-orange-500">Videos</a>
+      <a href="#tips" class="block py-2 hover:text-orange-500" onclick="showTab('tips'); closeMobileMenu(); return false;">Tips & Tricks</a>
+      <a href="#blog" class="block py-2 hover:text-orange-500" onclick="showTab('blog'); closeMobileMenu(); return false;">Blog</a>
+      <a href="#about-us" class="block py-2 hover:text-orange-500" onclick="showTab('about'); closeMobileMenu(); return false;">About Us</a>
+      <a href="#contact" class="block py-2 hover:text-orange-500" onclick="showTab('contact'); closeMobileMenu(); return false;">Contact</a>
+      <a href="#order-food" class="block py-2 hover:text-orange-500" onclick="showTab('menu'); closeMobileMenu(); return false;">Order Food</a>
+      <a href="#cart" class="block py-2 hover:text-orange-500" onclick="showTab('cart'); closeMobileMenu(); return false;">
+        <i class="fas fa-shopping-cart"></i> Cart
+      </a>
+    </div>
+  </div>
+  
+        
+        <div class="pt-2">
+          <input type="text" placeholder="Search recipes..." class="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+        </div>
+        <button class="bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 text-sm">
+          Subscribe <i class="fas fa-bell ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Home Tab -->
+<div id="home-tab" class="tab-content active-tab">
+  <section class="bg-gray-100 py-16 text-center">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
+        Discover Delicious Recipes
+      </h1>
+      <p class="text-lg text-gray-600 mb-8">
+        Explore recipes, cooking tips, or order ready-to-eat meals.
+      </p>
+      <div class="max-w-md mx-auto flex">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search for recipes or food..."
+          class="w-full p-3 rounded-l-md border border-gray-300 focus:outline-none"
+        />
+        <button id="searchBtn" class="bg-orange-500 text-white p-3 rounded-r-md hover:bg-orange-600">
+          Search
+        </button>
+      </div>
+      <p id="no-results" class="text-red-500 mt-4 hidden">No matching recipes found.</p>
+    </div>
+  </section>
+</div>
+
+
+    
+    <section class="py-12">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">
+          Popular Categories
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 text-center">
+          <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg cursor-pointer" onclick="showTab('categories'); filterCategories('pakistani');">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-utensils text-orange-500 text-xl"></i>
+            </div>
+            <h3 class="font-medium">Pakistani</h3>
+          </div>
+          <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg cursor-pointer" onclick="showTab('categories'); filterCategories('continental');">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-hamburger text-orange-500 text-xl"></i>
+            </div>
+            <h3 class="font-medium">Continental</h3>
+          </div>
+          <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg cursor-pointer" onclick="showTab('categories'); filterCategories('street');">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-hotdog text-orange-500 text-xl"></i>
+            </div>
+            <h3 class="font-medium">Street Food</h3>
+          </div>
+          <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg cursor-pointer" onclick="showTab('categories'); filterCategories('quick');">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-clock text-orange-500 text-xl"></i>
+            </div>
+            <h3 class="font-medium">Quick & Easy</h3>
+          </div>
+          <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg cursor-pointer" onclick="showTab('categories'); filterCategories('ramadan');">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-moon text-orange-500 text-xl"></i>
+            </div>
+            <h3 class="font-medium">Ramadan</h3>
+          </div>
+          <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg cursor-pointer" onclick="showTab('categories'); filterCategories('desserts');">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-ice-cream text-orange-500 text-xl"></i>
+            </div>
+            <h3 class="font-medium">Desserts</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="py-12 bg-gray-100">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold">Featured Recipes</h2>
+          <a href="#" class="text-orange-500 hover:underline" onclick="showTab('recipes'); return false;">View All</a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden food-card">
+            <div class="w-full h-56 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold text-xl">Chicken Biryani</span>
+            </div>
+            <div class="p-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 45 mins</span>
+                <span class="text-sm text-gray-500"><i class="fas fa-fire mr-1"></i> Medium</span>
+              </div>
+              <h3 class="text-xl font-semibold">Traditional Chicken Biryani</h3>
+              <p class="text-gray-600 mt-2">A flavorful rice dish that's a complete meal in itself.</p>
+              <button class="mt-4 bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600">
+                View Recipe
+              </button>
+            </div>
+          </div>
+          <a href="https://your-link.com" target="_blank" class="block">
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden food-card hover:shadow-xl transition-shadow duration-300">
+              <div class="w-full h-56 overflow-hidden">
+                <img src="https://media.istockphoto.com/id/2161006438/photo/close-up-mini-hamburgers-at-cocktail-party.webp?a=1&b=1&s=612x612&w=0&k=20&c=rhxYiTUL3mcBikH7oHcXZnlcKFT-RzQkYdXts1IHeKU=" alt="Beef Burger" class="object-cover w-full h-full">
+              </div>
+              <div class="p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 30 mins</span>
+                  <span class="text-sm text-gray-500"><i class="fas fa-fire mr-1"></i> Easy</span>
+                </div>
+                <h3 class="text-xl font-semibold">Juicy Beef Burger</h3>
+                <p class="text-gray-600 mt-2">Homemade burger that's better than any takeout.</p>
+                <div class="mt-4">
+                  <span class="inline-block bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 cursor-pointer">
+                    View Recipe
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+          
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden food-card">
+            <div class="w-full h-56 bg-gray-300 flex items-center justify-center">
+              <span class="text-gray-600 font-bold text-xl">Gulab Jamun</span>
+            </div>
+            <div class="p-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 40 mins</span>
+                <span class="text-sm text-gray-500"><i class="fas fa-fire mr-1"></i> Medium</span>
+              </div>
+              <h3 class="text-xl font-semibold">Homemade Gulab Jamun</h3>
+              <p class="text-gray-600 mt-2">Soft, spongy and melt-in-mouth dessert.</p>
+              <button class="mt-4 bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600">
+                View Recipe
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="LatestVideos" class="py-12">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold">Latest Videos</h2>
+          <a href="#" class="text-orange-500 hover:underline" onclick="showTab('videos'); return false;">View All</a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden food-card">
+            <div class="relative">
+              <!-- Your video card content goes here -->
+    
+              <div class="w-full h-48 bg-gray-300 flex items-center justify-center">
+                <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+              </div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <button class="bg-white bg-opacity-70 rounded-full p-3 hover:bg-opacity-100">
+                  <i class="fas fa-play text-orange-500 text-xl"></i>
+                </button>
+              </div>
+              <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+                8:42
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Karahi Recipe Step by Step</h3>
+              <p class="text-gray-600 text-sm mt-1">Posted 3 days ago</p>
+            </div>
+          </div>
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden food-card">
+            <div class="relative">
+              <div class="w-full h-48 bg-gray-300 flex items-center justify-center">
+                <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+              </div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <button class="bg-white bg-opacity-70 rounded-full p-3 hover:bg-opacity-100">
+                  <i class="fas fa-play text-orange-500 text-xl"></i>
+                </button>
+              </div>
+              <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+                5:18
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">5 Quick Breakfast Ideas</h3>
+              <p class="text-gray-600 text-sm mt-1">Posted 1 week ago</p>
+            </div>
+          </div>
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden food-card">
+            <div class="relative">
+              <div class="w-full h-48 bg-gray-300 flex items-center justify-center">
+                <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+              </div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <button class="bg-white bg-opacity-70 rounded-full p-3 hover:bg-opacity-100">
+                  <i class="fas fa-play text-orange-500 text-xl"></i>
+                </button>
+              </div>
+              <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+                12:05
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Cakes Without Oven</h3>
+              <p class="text-gray-600 text-sm mt-1">Posted 2 weeks ago</p>
+            </div>
+          </div>
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden food-card">
+            <div class="relative">
+              <div class="w-full h-48 bg-gray-300 flex items-center justify-center">
+                <span class="text-gray-600 font-bold text-xl">Video Thumbnail</span>
+              </div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <button class="bg-white bg-opacity-70 rounded-full p-3 hover:bg-opacity-100">
+                  <i class="fas fa-play text-orange-500 text-xl"></i>
+                </button>
+              </div>
+              <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+                7:32
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">3 Easy Iftar Recipes</h3>
+              <p class="text-gray-600 text-sm mt-1">Posted 1 month ago</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="py-16 bg-orange-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 class="text-3xl font-bold mb-4">Chef's Corner</h2>
+          <p class="text-gray-600">Special recipes curated by our expert chef with tips for perfect results every time.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl mx-auto">
+          <div class="md:flex">
+            <div class="md:w-1/3 bg-gray-300 flex items-center justify-center" style="min-height: 300px;">
+              <span class="text-gray-600 font-bold text-xl">Chef Photo</span>
+            </div>
+            <div class="md:w-2/3 p-6">
+              <h3 class="text-2xl font-semibold mb-2">Chef Aisha's Special Nihari</h3>
+              <div class="flex items-center mb-4">
+                <img class="w-10 h-10 rounded-full mr-2 bg-gray-200" alt="Chef photo">
+                <div>
+                  <p class="font-medium">Chef Aisha</p>
+                  <p class="text-gray-500 text-sm">Head Chef</p>
+                </div>
+              </div>
+              <p class="text-gray-600 mb-4">
+                "This recipe has been in my family for generations. The secret is in slow cooking and the perfect blend of spices. Make sure to
