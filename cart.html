@@ -3,165 +3,237 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cart - Desi Food Restaurant</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Cart - FoodieApp</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-<body class="bg-gray-100">
-  <header class="bg-orange-500 text-white shadow-md">
-    <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <a href="/index.html" class="text-2xl font-bold">Desi Food Restaurant</a>
-      <div class="flex items-center">
-        <a href="#index.html" class="text-white hover:text-orange-300 mr-4">Menu</a>
-        <a href="cart.html" class="text-white hover:text-orange-300 flex items-center">
-          <i class="fas fa-shopping-cart mr-2"></i>
-          Cart (<span id="cart-count">0</span>)
-        </a>
-      </div>
-    </nav>
+<body class="bg-gray-100 font-sans">
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-orange-500">FoodieApp</h1>
+      <nav>
+        <ul class="flex space-x-6">
+          <li><a href="#" class="text-gray-600 hover:text-orange-500">Home</a></li>
+          <li><a href="#" class="text-gray-600 hover:text-orange-500">Menu</a></li>
+          <li><a href="#" class="text-gray-600 hover:text-orange-500">About</a></li>
+          <li><a href="#" class="text-gray-600 hover:text-orange-500">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <main class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">Your Cart</h1>
-    
-    <div id="cart-empty" class="hidden text-center text-gray-600">
-      <p class="text-lg">Your cart is empty.</p>
-      <a href="#Order food" class="text-orange-500 hover:underline">Return to Menu</a>
-    </div>
+  <!-- Cart Section -->
+  <section class="py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl font-bold mb-8 text-center">Your Cart</h1>
 
-    <div id="cart-content" class="space-y-4">
-      <!-- Cart items will be dynamically inserted here -->
-    </div>
+      <div class="flex flex-col md:flex-row gap-8">
+        <!-- Cart Items and Details -->
+        <div class="md:w-2/3">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+            <div class="p-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-4">Cart Items</h2>
+              <div id="cart-items" class="space-y-6">
+                <!-- Sample Cart Item -->
+                <div class="flex items-center justify-between border-b pb-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-20 h-20 bg-gray-200 flex items-center justify-center rounded">
+                      <span class="text-gray-600">Item Image</span>
+                    </div>
+                    <div>
+                      <h3 class="text-lg font-bold text-gray-800">Chicken Biryani</h3>
+                      <p class="text-gray-600">Authentic Pakistani Chicken Biryani with spices</p>
+                      <p class="text-sm text-gray-500">Add-ons: Raita (+$1.00)</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-2">
+                      <button class="text-gray-600 hover:text-orange-500">-</button>
+                      <span class="text-gray-800">1</span>
+                      <button class="text-gray-600 hover:text-orange-500">+</button>
+                    </div>
+                    <p class="text-gray-800 font-bold">$12.99</p>
+                    <button class="text-red-500 hover:text-red-700">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- Empty Cart Message -->
+                <div id="empty-cart-message" class="hidden text-center text-gray-600 py-8">
+                  <p>Your cart is empty. Start adding some delicious items!</p>
+                  <a href="#" class="text-orange-500 hover:text-orange-600 font-bold">Browse Menu</a>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <div id="cart-summary" class="mt-8 bg-white p-6 rounded-lg shadow-md hidden">
-      <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
-      <div class="flex justify-between mb-2">
-        <span>Subtotal</span>
-        <span id="subtotal">Rs. 0</span>
-      </div>
-      <div class="flex justify-between mb-2">
-        <span>Tax (10%)</span>
-        <span id="tax">Rs. 0</span>
-      </div>
-      <div class="flex justify-between font-bold text-lg">
-        <span>Total</span>
-        <span id="total">Rs. 0</span>
-      </div>
-      <button id="checkout-btn" class="mt-4 w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600">
-        Proceed to Checkout
-      </button>
-    </div>
-  </main>
+          <!-- Delivery Information -->
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+            <div class="p-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-4">Delivery Information</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-gray-600 mb-2">Full Name</label>
+                  <input type="text" class="w-full border rounded-lg p-2" placeholder="Enter your name">
+                </div>
+                <div>
+                  <label class="block text-gray-600 mb-2">Phone Number</label>
+                  <input type="tel" class="w-full border rounded-lg p-2" placeholder="Enter your phone number">
+                </div>
+                <div class="md:col-span-2">
+                  <label class="block text-gray-600 mb-2">Delivery Address</label>
+                  <input type="text" class="w-full border rounded-lg p-2" placeholder="Enter your full address">
+                </div>
+                <div class="md:col-span-2">
+                  <label class="block text-gray-600 mb-2">Additional Instructions</label>
+                  <textarea class="w-full border rounded-lg p-2" placeholder="E.g., Call before delivery" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
 
-  <footer class="bg-gray-800 text-white py-6">
-    <div class="container mx-auto px-4 text-center">
-      <p>© 2025 Desi Food Restaurant. All rights reserved.</p>
+          <!-- Payment Method -->
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-4">Payment Method</h2>
+              <div class="space-y-4">
+                <div class="flex items-center">
+                  <input type="radio" name="payment" id="cod" class="mr-2">
+                  <label for="cod" class="text-gray-600">Cash on Delivery</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="radio" name="payment" id="online" class="mr-2">
+                  <label for="online" class="text-gray-600">Online Payment</label>
+                </div>
+                <!-- Online Payment Fields (Hidden by Default) -->
+                <div id="online-payment-fields" class="hidden space-y-4 mt-4">
+                  <div>
+                    <label class="block text-gray-600 mb-2">Card Number</label>
+                    <input type="text" class="w-full border rounded-lg p-2" placeholder="1234 5678 9012 3456">
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-gray-600 mb-2">Expiry Date</label>
+                      <input type="text" class="w-full border rounded-lg p-2" placeholder="MM/YY">
+                    </div>
+                    <div>
+                      <label class="block text-gray-600 mb-2">CVV</label>
+                      <input type="text" class="w-full border rounded-lg p-2" placeholder="123">
+                    </div>
+                  </div>
+                  <!-- Payment Gateway Placeholder -->
+                  <!-- TODO: Update with actual payment gateway integration (e.g., Stripe, PayPal) -->
+                  <p class="text-gray-500 text-sm">Secure payment powered by [Your Payment Gateway]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="md:w-1/3">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden sticky top-4">
+            <div class="p-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-4">Order Summary</h2>
+              <div class="space-y-4">
+                <div class="flex justify-between">
+                  <p class="text-gray-600">Subtotal</p>
+                  <p class="text-gray-800">$12.99</p>
+                </div>
+                <div class="flex justify-between">
+                  <p class="text-gray-600">Delivery Fee</p>
+                  <p class="text-gray-800">$2.50</p>
+                </div>
+                <div class="flex justify-between">
+                  <p class="text-gray-600">Tax</p>
+                  <p class="text-gray-800">$1.30</p>
+                </div>
+                <div class="flex justify-between font-bold text-gray-800">
+                  <p>Total</p>
+                  <p class="text-orange-500">$16.79</p>
+                </div>
+              </div>
+              <div class="mt-6">
+                <input type="text" class="w-full border rounded-lg p-2 mb-4" placeholder="Apply Promo Code">
+                <button class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition duration-300">
+                  Apply Promo
+                </button>
+              </div>
+              <button class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition duration-300 mt-4">
+                Proceed to Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow py-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-lg font-bold text-orange-500 mb-4">FoodieApp</h3>
+          <p class="text-gray-600">Bringing authentic Pakistani flavors to your doorstep.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-orange-500 mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-600 hover:text-orange-500">Home</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-orange-500">Menu</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-orange-500">About</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-orange-500">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-orange-500 mb-4">Follow Us</h3>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-8 text-center text-gray-600">
+        <p>© 2025 FoodieApp. All rights reserved.</p>
+      </div>
     </div>
   </footer>
-
-  <script>
-    function renderCart() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const cartContent = document.getElementById('cart-content');
-      const cartEmpty = document.getElementById('cart-empty');
-      const cartSummary = document.getElementById('cart-summary');
-      const subtotalElement = document.getElementById('subtotal');
-      const taxElement = document.getElementById('tax');
-      const totalElement = document.getElementById('total');
-      const cartCountElement = document.getElementById('cart-count');
-
-      if (cart.length === 0) {
-        cartEmpty.classList.remove('hidden');
-        cartContent.innerHTML = '';
-        cartSummary.classList.add('hidden');
-        cartCountElement.textContent = '0';
-        return;
-      }
-
-      cartEmpty.classList.add('hidden');
-      cartSummary.classList.remove('hidden');
-      cartContent.innerHTML = '';
-
-      let subtotal = 0;
-      let totalQuantity = 0;
-
-      cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
-        subtotal += itemTotal;
-        totalQuantity += item.quantity;
-
-        const cartItem = document.createElement('div');
-        cartItem.className = 'flex items-center justify-between bg-white p-4 rounded-lg shadow-md';
-        cartItem.innerHTML = `
-          <div class="flex items-center">
-            <div class="h-16 w-16 bg-gray-200 rounded mr-4">
-              <img src="https://images.unsplash.com/photo-1672477179695-7276b0602fa9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="${item.name}" class="h-full w-full object-cover rounded">
-            </div>
-            <div>
-              <h3 class="font-semibold">${item.name}</h3>
-              <p class="text-sm text-gray-600">Rs. ${item.price.toFixed(2)}</p>
-            </div>
-          </div>
-          <div class="flex items-center">
-            <button class="decrement-qty text-gray-500 hover:text-orange-500" data-index="${index}">
-              <i class="fas fa-minus"></i>
-            </button>
-            <span class="mx-2">${item.quantity}</span>
-            <button class="increment-qty text-gray-500 hover:text-orange-500" data-index="${index}">
-              <i class="fas fa-plus"></i>
-            </button>
-            <button class="remove-item text-red-500 hover:text-red-700 ml-4" data-index="${index}">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        `;
-        cartContent.appendChild(cartItem);
-      });
-
-      const tax = subtotal * 0.1;
-      const total = subtotal + tax;
-
-      subtotalElement.textContent = `Rs. ${subtotal.toFixed(2)}`;
-      taxElement.textContent = `Rs. ${tax.toFixed(2)}`;
-      totalElement.textContent = `Rs. ${total.toFixed(2)}`;
-      cartCountElement.textContent = totalQuantity;
-    }
-
-    // Update quantity (increment/decrement)
-    document.addEventListener('click', function (e) {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const index = e.target.closest('button')?.dataset.index;
-
-      if (e.target.closest('.increment-qty')) {
-        cart[index].quantity += 1;
-        localStorage.setItem('cart', JSON.stringify(cart));
-        renderCart();
-      }
-
-      if (e.target.closest('.decrement-qty')) {
-        if (cart[index].quantity > 1) {
-          cart[index].quantity -= 1;
-        } else {
-          cart.splice(index, 1);
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        renderCart();
-      }
-
-      if (e.target.closest('.remove-item')) {
-        cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        renderCart();
-      }
-    });
-
-    // Placeholder checkout functionality
-    document.getElementById('checkout-btn').addEventListener('click', function () {
-      alert('Proceeding to checkout (placeholder).');
-    });
-
-    // Render cart on page load
-    document.addEventListener('DOMContentLoaded', renderCart);
-  </script>
-</body>
 </html>
+
+
+
+      <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+          <p>© 2025 Desi Food Restaurant. All rights reserved.</p>
+        </div>
+      </footer>
+
+      <script>
+        document.getElementById('category-filter').addEventListener('change', function () {
+          const selectedCategory = this.value;
+          const categorySections = document.querySelectorAll('.category-section');
+
+          categorySections.forEach(section => {
+            if (selectedCategory === 'all' || section.getAttribute('data-category') === selectedCategory) {
+              section.style.display = 'block';
+            } else {
+              section.style.display = 'none';
+            }
+          });
+        });
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+          button.addEventListener('click', function () {
+            const itemName = this.parentElement.querySelector('h4').textContent;
+            alert(`${itemName} added to cart!`);
+          });
+        });
+      </script>
+    </body>
+  </html>
+
+<script src="foodieapp.js"></script>
+</body>

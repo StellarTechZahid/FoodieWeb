@@ -12,7 +12,9 @@ let cartCountElement;
 let mobileMenu;
 let allTabs;
 
-// Wait for the DOM to be fully loaded
+/**
+ * Wait for the DOM to be fully loaded
+ */
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize DOM elements
     cartCountElement = document.getElementById('cart-count');
@@ -27,8 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check user's preferred color scheme
     checkUserColorScheme();
-});
 
+    // Initialize cart page if on cart.html
+    if (window.location.pathname.includes('#cart')) {
+        displayCartItems();
+    }
+});
 
 /**
  * Initialize all event listeners for the app
@@ -57,6 +63,34 @@ function initializeEventListeners() {
     if (menuIcon) {
         menuIcon.addEventListener('click', toggleMobileMenu);
     }
+
+    // Cart page specific event listeners
+    if (window.location.pathname.includes('#cart')) {
+        // Payment method toggle
+        const codRadio = document.getElementById('cod');
+        const onlineRadio = document.getElementById('online');
+        const onlinePaymentFields = document.getElementById('online-payment-fields');
+        if (codRadio && onlineRadio && onlinePaymentFields) {
+            codRadio.addEventListener('change', () => {
+                onlinePaymentFields.classList.add('hidden');
+            });
+            onlineRadio.addEventListener('change', () => {
+                onlinePaymentFields.classList.remove('hidden');
+            });
+        }
+
+        // Promo code application
+        const promoButton = document.querySelector('button[onclick="applyPromo()"]');
+        if (promoButton) {
+            promoButton.addEventListener('click', applyPromo);
+        }
+
+        // Checkout button
+        const checkoutButton = document.querySelector('button[onclick="proceedToCheckout()"]');
+        if (checkoutButton) {
+            checkoutButton.addEventListener('click', proceedToCheckout);
+        }
+    }
 }
 
 /**
@@ -64,18 +98,15 @@ function initializeEventListeners() {
  * @param {string} tabId - The ID of the tab to show
  */
 function showTab(tabId) {
-    // Hide all tabs
     allTabs.forEach(tab => {
         tab.classList.remove('active-tab');
     });
     
-    // Show the selected tab
     const selectedTab = document.getElementById(`${tabId}-tab`);
     if (selectedTab) {
         selectedTab.classList.add('active-tab');
     }
     
-    // Scroll to top
     window.scrollTo(0, 0);
 }
 
@@ -107,14 +138,11 @@ function toggleMobileSubmenu(submenuId) {
  * @param {number} quantity - Quantity to add (default: 1)
  */
 function addToCart(id, name, price, quantity = 1) {
-    // Check if item already exists in cart
     const existingItemIndex = cartItems.findIndex(item => item.id === id);
     
     if (existingItemIndex > -1) {
-        // Update quantity if item exists
         cartItems[existingItemIndex].quantity += quantity;
     } else {
-        // Add new item if it doesn't exist
         cartItems.push({
             id: id,
             name: name,
@@ -123,14 +151,10 @@ function addToCart(id, name, price, quantity = 1) {
         });
     }
     
-    // Update cart UI
     updateCartUI();
-    
-    // Save cart to local storage
     saveCartToStorage();
-    
-    // Show success message
     showNotification(`Added ${name} to cart!`, 'success');
+    window.location.href = '#cart';
 }
 
 /**
@@ -138,22 +162,13 @@ function addToCart(id, name, price, quantity = 1) {
  * @param {string} id - Product ID to remove
  */
 function removeFromCart(id) {
-    // Find the item index
     const itemIndex = cartItems.findIndex(item => item.id === id);
     
     if (itemIndex > -1) {
         const removedItem = cartItems[itemIndex];
-        
-        // Remove the item
         cartItems.splice(itemIndex, 1);
-        
-        // Update cart UI
         updateCartUI();
-        
-        // Save cart to local storage
         saveCartToStorage();
-        
-        // Show notification
         showNotification(`Removed ${removedItem.name} from cart`, 'info');
     }
 }
@@ -164,23 +179,180 @@ function removeFromCart(id) {
  * @param {number} newQuantity - New quantity value
  */
 function updateCartItemQuantity(id, newQuantity) {
-    // Find the item
     const itemIndex = cartItems.findIndex(item => item.id === id);
     
     if (itemIndex > -1) {
         if (newQuantity <= 0) {
-            // Remove item if quantity is 0 or negative
             removeFromCart(id);
         } else {
-            // Update quantity
             cartItems[itemIndex].quantity = newQuantity;
-            
-            // Update cart UI
             updateCartUI();
-            
-            // Save cart to local storage
             saveCartToStorage();
         }
+    }
+}
+
+/**
+ * Display cart items on the cart page
+ */
+function displayCartItems() {
+    const cartContainer = document.getElementById('cart-items');
+    const emptyCartMessage = document.getElementById('empty-cart-message');
+    
+    if (!cartContainer || !emptyCartMessage) return;
+
+    cartItems = JSON.parse(localStorage.getItem('foodieAppCart')) || [];
+    
+    if (cartItems.length === 0) {
+        cartContainer.innerHTML = '';
+        emptyCartMessage.classList.remove('hidden');
+        updateCartTotals();
+        return;
+    }
+
+    emptyCartMessage.classList.add('hidden');
+    cartContainer.innerHTML = cartItems.map(item => `
+        <div class="flex items-center justify-between border-b pb-4">
+            <div class="flex items-center space-x-4">
+                <div class="w-20 h-20 bg-gray-200 flex items-center justify-center rounded">
+                    <span class="text-gray-600">Item Image</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">${item.name}</h3>
+                    <p class="text-gray-600">$${item.price.toFixed(2)}</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-2">
+                    <button onclick="updateCartItemQuantity('${item.id}', ${item.quantity - 1})" class="text-gray-600 hover:text-orange-500">-</button>
+                    <span class="text-gray-800">${item.quantity}</span>
+                    <button onclick="updateCartItemQuantity('${item.id}', ${item.quantity + 1})" class="text-gray-600 hover:text-orange-500">+</button>
+                </div>
+                <p class="text-gray-800 font-bold">$${(item.price * item.quantity).toFixed(2)}</p>
+                <button onclick="removeFromCart('${item.id}')" class="text-red-500 hover:text-red-700">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+
+    updateCartTotals();
+}
+
+/**
+ * Update cart totals (subtotal, delivery, tax, total)
+ */
+function updateCartTotals() {
+    const subtotalElement = document.querySelector('.flex.justify-between p:nth-child(2):not(.text-orange-500)');
+    const taxElement = document.querySelectorAll('.flex.justify-between p:nth-child(2)')[1];
+    const totalElement = document.querySelector('.flex.justify-between p.text-orange-500');
+    const deliveryFeeElement = document.querySelectorAll('.flex.justify-between p:nth-child(2)')[0];
+
+    if (subtotalElement && taxElement && totalElement && deliveryFeeElement) {
+        const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const deliveryFee = cartItems.length > 0 ? 2.50 : 0;
+        const tax = subtotal * 0.10;
+        const total = subtotal + deliveryFee + tax;
+
+        subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+        deliveryFeeElement.textContent = `$${deliveryFee.toFixed(2)}`;
+        taxElement.textContent = `$${tax.toFixed(2)}`;
+        totalElement.textContent = `$${total.toFixed(2)}`;
+    }
+}
+
+/**
+ * Apply promo code
+ */
+function applyPromo() {
+    const promoInput = document.querySelector('input[placeholder="Apply Promo Code"]');
+    if (!promoInput) return;
+
+    const promoCode = promoInput.value.trim();
+    // TODO: Implement actual promo code validation with backend
+    if (promoCode === 'FOODIE10') {
+        const totalElement = document.querySelector('.flex.justify-between p.text-orange-500');
+        const currentTotal = parseFloat(totalElement.textContent.replace('$', ''));
+        const discountedTotal = currentTotal * 0.9; // 10% discount
+        totalElement.textContent = `$${discountedTotal.toFixed(2)}`;
+        showNotification('Promo code applied successfully!', 'success');
+        promoInput.value = '';
+    } else {
+        showNotification('Invalid promo code', 'error');
+    }
+}
+
+/**
+ * Validate and process checkout
+ */
+function proceedToCheckout() {
+    // Validate cart
+    if (cartItems.length === 0) {
+        showNotification('Your cart is empty', 'error');
+        return;
+    }
+
+    // Validate delivery information
+    const nameInput = document.querySelector('input[placeholder="Enter your name"]');
+    const phoneInput = document.querySelector('input[placeholder="Enter your phone number"]');
+    const addressInput = document.querySelector('input[placeholder="Enter your full address"]');
+
+    if (!nameInput.value || !phoneInput.value || !addressInput.value) {
+        showNotification('Please fill all delivery information fields', 'error');
+        return;
+    }
+
+    // Validate payment method
+    const codRadio = document.getElementById('cod');
+    const onlineRadio = document.getElementById('online');
+    if (!codRadio.checked && !onlineRadio.checked) {
+        showNotification('Please select a payment method', 'error');
+        return;
+    }
+
+    if (onlineRadio.checked) {
+        const cardNumber = document.querySelector('input[placeholder="1234 5678 9012 3456"]').value;
+        const expiryDate = document.querySelector('input[placeholder="MM/YY"]').value;
+        const cvv = document.querySelector('input[placeholder="123"]').value;
+
+        if (!cardNumber || !expiryDate || !cvv) {
+            showNotification('Please fill all payment details', 'error');
+            return;
+        }
+
+        // TODO: Integrate with payment gateway (e.g., Stripe, PayPal)
+        // Example: const paymentResult = await processPayment({ cardNumber, expiryDate, cvv });
+        showNotification('Processing payment...', 'info');
+    }
+
+    // Submit order to backend
+    const order = {
+        items: cartItems,
+        deliveryInfo: {
+            name: nameInput.value,
+            phone: phoneInput.value,
+            address: addressInput.value
+        },
+        paymentMethod: codRadio.checked ? 'cod' : 'online',
+        total: parseFloat(document.querySelector('.flex.justify-between p.text-orange-500').textContent.replace('$', ''))
+    };
+
+    // TODO: Send order to backend API
+    // Example: await fetch('/api/orders', { method: 'POST', body: JSON.stringify(order) });
+
+    const orderNumber = Math.floor(Math.random() * 1000000);
+    showNotification(`Order #${orderNumber} placed successfully!`, 'success');
+    
+    // Clear cart and reset form
+    clearCart();
+    nameInput.value = '';
+    phoneInput.value = '';
+    addressInput.value = '';
+    document.querySelector('textarea[placeholder="E.g., Call before delivery"]').value = '';
+    if (onlineRadio.checked) {
+        document.querySelector('input[placeholder="1234 5678 9012 3456"]').value = '';
+        document.querySelector('input[placeholder="MM/YY"]').value = '';
+        document.querySelector('input[placeholder="123"]').value = '';
     }
 }
 
@@ -188,75 +360,13 @@ function updateCartItemQuantity(id, newQuantity) {
  * Update the cart UI elements
  */
 function updateCartUI() {
-    // Update cart count
     if (cartCountElement) {
         const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
         cartCountElement.textContent = totalItems;
     }
     
-    // Update cart items list if on cart page
-    const cartItemsList = document.getElementById('cart-items-list');
-    if (cartItemsList) {
-        renderCartItems(cartItemsList);
-    }
-    
-    // Update cart total
-    updateCartTotal();
-}
-
-/**
- * Render cart items in the provided element
- * @param {HTMLElement} container - The container to render items in
- */
-function renderCartItems(container) {
-    // Clear the container
-    container.innerHTML = '';
-    
-    if (cartItems.length === 0) {
-        // Show empty cart message
-        container.innerHTML = `
-            <div class="text-center py-8">
-                <i class="fas fa-shopping-cart text-4xl text-gray-400 mb-4"></i>
-                <p class="text-gray-600">Your cart is empty</p>
-                <a href="#" class="text-orange-500 font-medium mt-2 inline-block" onclick="showTab('menu'); return false;">Browse Menu</a>
-            </div>
-        `;
-        return;
-    }
-    
-    // Render each cart item
-    cartItems.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'flex items-center justify-between py-4 border-b';
-        itemElement.innerHTML = `
-            <div class="flex items-center">
-                <div class="w-16 h-16 bg-gray-200 rounded"></div>
-                <div class="ml-4">
-                    <h3 class="font-medium">${item.name}</h3>
-                    <p class="text-gray-600">$${item.price.toFixed(2)}</p>
-                </div>
-            </div>
-            <div class="flex items-center">
-                <button class="px-2 py-1 bg-gray-200 rounded-l" onclick="updateCartItemQuantity('${item.id}', ${item.quantity - 1})">-</button>
-                <span class="px-4 py-1 bg-gray-100">${item.quantity}</span>
-                <button class="px-2 py-1 bg-gray-200 rounded-r" onclick="updateCartItemQuantity('${item.id}', ${item.quantity + 1})">+</button>
-                <button class="ml-4 text-red-500" onclick="removeFromCart('${item.id}')">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
-        container.appendChild(itemElement);
-    });
-}
-
-/**
- * Update the cart total price display
- */
-function updateCartTotal() {
-    const cartTotalElement = document.getElementById('cart-total');
-    if (cartTotalElement) {
-        const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        cartTotalElement.textContent = `$${total.toFixed(2)}`;
+    if (window.location.pathname.includes('#cart')) {
+        displayCartItems();
     }
 }
 
@@ -295,10 +405,8 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     darkModeEnabled = !darkModeEnabled;
     
-    // Save preference in local storage
     localStorage.setItem('foodieAppDarkMode', darkModeEnabled);
     
-    // Update icon
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     if (darkModeToggle) {
         const icon = darkModeToggle.querySelector('i');
@@ -318,22 +426,18 @@ function toggleDarkMode() {
  * Check user's preferred color scheme
  */
 function checkUserColorScheme() {
-    // Check local storage first
     const savedDarkMode = localStorage.getItem('foodieAppDarkMode');
     
     if (savedDarkMode !== null) {
-        // Use saved preference
         if (savedDarkMode === 'true') {
             darkModeEnabled = true;
             document.body.classList.add('dark-mode');
         }
     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // Use system preference if no saved preference
         darkModeEnabled = true;
         document.body.classList.add('dark-mode');
     }
     
-    // Update icon if dark mode is enabled
     if (darkModeEnabled) {
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         if (darkModeToggle) {
@@ -352,10 +456,8 @@ function checkUserColorScheme() {
  * @param {string} type - Message type ('success', 'error', 'info')
  */
 function showNotification(message, type = 'info') {
-    // Create notification element
     const notification = document.createElement('div');
     
-    // Set classes based on type
     let bgColor = 'bg-blue-500';
     let icon = 'fa-info-circle';
     
@@ -373,10 +475,8 @@ function showNotification(message, type = 'info') {
         <span>${message}</span>
     `;
     
-    // Add to DOM
     document.body.appendChild(notification);
     
-    // Remove after 3 seconds
     setTimeout(() => {
         notification.style.opacity = '0';
         setTimeout(() => {
@@ -392,7 +492,6 @@ function showNotification(message, type = 'info') {
 function submitOrder(event) {
     event.preventDefault();
     
-    // Simple validation
     const form = event.target;
     const nameInput = form.querySelector('input[name="name"]');
     const emailInput = form.querySelector('input[name="email"]');
@@ -403,21 +502,16 @@ function submitOrder(event) {
         return;
     }
     
-    // Submit order (this would normally go to a backend)
     const orderNumber = Math.floor(Math.random() * 1000000);
-    
     showNotification('Order placed successfully!', 'success');
     
-    // Clear cart
     clearCart();
     
-    // Show order confirmation
     const orderConfirmation = document.getElementById('order-confirmation');
     if (orderConfirmation) {
         orderConfirmation.classList.remove('hidden');
         document.getElementById('order-number').textContent = orderNumber;
         
-        // Hide order form
         const orderForm = document.getElementById('order-form');
         if (orderForm) {
             orderForm.classList.add('hidden');
@@ -442,7 +536,6 @@ function filterMenuByCategory(category) {
         }
     });
     
-    // Update active category button
     const categoryButtons = document.querySelectorAll('.category-btn');
     categoryButtons.forEach(button => {
         if (button.getAttribute('data-category') === category) {
@@ -455,15 +548,11 @@ function filterMenuByCategory(category) {
     });
 }
 
-
-
 /**
  * Search functionality
  * @param {string} query - Search query
  */
 function searchSite(query) {
-    // This would typically connect to a backend search API
-    // For now, we'll just show a notification
     showNotification(`Searching for: ${query}`, 'info');
 }
 
@@ -480,7 +569,6 @@ function subscribeNewsletter(event) {
         return;
     }
     
-    // This would typically send to a backend API
     showNotification('Thank you for subscribing!', 'success');
     emailInput.value = '';
 }
@@ -491,7 +579,6 @@ function subscribeNewsletter(event) {
  */
 function playVideo(videoId) {
     showNotification(`Playing video: ${videoId}`, 'info');
-    // This would typically open a modal or play an embedded video
 }
 
 /**
@@ -501,7 +588,6 @@ function playVideo(videoId) {
 function submitContactForm(event) {
     event.preventDefault();
     
-    // Simple validation
     const form = event.target;
     const nameInput = form.querySelector('input[name="name"]');
     const emailInput = form.querySelector('input[name="email"]');
@@ -512,10 +598,7 @@ function submitContactForm(event) {
         return;
     }
     
-    // This would typically send to a backend API
     showNotification('Your message has been sent!', 'success');
-    
-    // Reset form
     form.reset();
 }
 
