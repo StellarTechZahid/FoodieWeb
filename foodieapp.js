@@ -1,5 +1,5 @@
 /**
- * FoodieApp JavaScript Functionality - Fixed Version
+ * FoodieApp JavaScript Functionality - Supports Dropdown Filter and New Card Design
  * This file contains the interactive functionality for the FoodieApp website
  */
 
@@ -46,12 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
  * Create and append the "Proceed to Cart" button
  */
 function createProceedToCartButton() {
-    const categorySection = document.querySelector('.menu-items');
+    const container = document.getElementById('proceed-to-cart-container');
     
-    if (categorySection) {
+    if (container) {
         proceedToCartButton = document.createElement('button');
         proceedToCartButton.id = 'proceed-to-cart-btn';
-        proceedToCartButton.className = 'mt-4 bg-orange-500 text-white py-2 px-4 rounded-lg shadow hover:bg-orange-600 transition duration-300';
+        proceedToCartButton.className = 'mt-4 md:mt-0 w-full md:w-auto bg-orange-500 text-white py-3 px-6 rounded-lg shadow hover:bg-orange-600 transition duration-300 flex items-center justify-center';
         proceedToCartButton.innerHTML = '<i class="fas fa-shopping-cart mr-2"></i>Proceed to Cart';
         proceedToCartButton.addEventListener('click', function() {
             showTab('cart');
@@ -62,7 +62,7 @@ function createProceedToCartButton() {
             proceedToCartButton.classList.add('hidden');
         }
         
-        categorySection.appendChild(proceedToCartButton);
+        container.appendChild(proceedToCartButton);
     }
 }
 
@@ -82,11 +82,11 @@ function initializeEventListeners() {
         menuIcon.addEventListener('click', toggleMobileMenu);
     }
 
-    // Search input
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            searchSite(this.value);
+    // Category filter dropdown
+    const categoryFilter = document.getElementById('category-filter');
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', function() {
+            filterMenuByCategory(this.value);
         });
     }
 
@@ -105,15 +105,15 @@ function initializeEventListeners() {
             // Update button text to show "Added to Cart"
             const originalText = button.innerHTML;
             button.innerHTML = '<i class="fas fa-check mr-1"></i>Added to Cart';
-            button.classList.remove('bg-orange-500');
-            button.classList.add('bg-green-500');
+            button.classList.add('text-green-500');
+            button.classList.remove('text-orange-500');
             button.disabled = true;
             
             // Revert button after 2 seconds
             setTimeout(() => {
                 button.innerHTML = originalText;
-                button.classList.remove('bg-green-500');
-                button.classList.add('bg-orange-500');
+                button.classList.remove('text-green-500');
+                button.classList.add('text-orange-500');
                 button.disabled = false;
             }, 2000);
         }
@@ -206,7 +206,6 @@ function toggleMobileMenu() {
  * @param {number} quantity - Quantity to add
  */
 function addToCart(id, name, price, quantity) {
-    // console.log('Adding to cart:', { id, name, price, quantity });
     const existingItemIndex = cartItems.findIndex(item => item.id === id);
     
     if (existingItemIndex > -1) {
@@ -220,7 +219,6 @@ function addToCart(id, name, price, quantity) {
         });
     }
     
-    // console.log('Updated cartItems:', cartItems);
     updateCartUI();
     saveCartToStorage();
     showNotification(`Added ${name} to cart!`, 'success');
@@ -235,7 +233,6 @@ function addToCart(id, name, price, quantity) {
  * @param {string} id - Product ID to remove
  */
 function removeFromCart(id) {
-    // console.log('Removing item:', id);
     const itemIndex = cartItems.findIndex(item => item.id === id);
     
     if (itemIndex > -1) {
@@ -257,7 +254,6 @@ function removeFromCart(id) {
  * @param {number} newQuantity - New quantity value
  */
 function updateCartItemQuantity(id, newQuantity) {
-    // console.log('Updating quantity:', id, newQuantity);
     const itemIndex = cartItems.findIndex(item => item.id === id);
     
     if (itemIndex > -1) {
@@ -279,11 +275,8 @@ function displayCartItems() {
     const emptyCartMessage = document.getElementById('empty-cart-message');
     
     if (!cartContainer || !emptyCartMessage) {
-        // console.log('Cart container or empty message not found');
         return;
     }
-
-    // console.log('Displaying cartItems:', cartItems);
     
     if (cartItems.length === 0) {
         cartContainer.innerHTML = '';
@@ -585,7 +578,6 @@ function showOrderConfirmation(orderNumber) {
  * Update the cart UI elements
  */
 function updateCartUI() {
-    // console.log('Updating cart UI');
     if (cartCountElement) {
         const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
         cartCountElement.textContent = totalItems;
@@ -606,7 +598,6 @@ function updateCartUI() {
  * Save the current cart to local storage
  */
 function saveCartToStorage() {
-    // console.log('Saving cart to storage:', cartItems);
     localStorage.setItem('foodieAppCart', JSON.stringify(cartItems));
 }
 
@@ -617,7 +608,6 @@ function loadCartFromStorage() {
     const savedCart = localStorage.getItem('foodieAppCart');
     if (savedCart) {
         cartItems = JSON.parse(savedCart);
-        // console.log('Loaded cart from storage:', cartItems);
         updateCartUI();
         
         if (proceedToCartButton && cartItems.length > 0) {
@@ -731,32 +721,20 @@ function showNotification(message, type = 'info') {
  * @param {string} category - Category to filter by
  */
 function filterMenuByCategory(category) {
-    const menuItems = document.querySelectorAll('.menu-item');
+    const categorySections = document.querySelectorAll('.category-section');
     
-    menuItems.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
-        
-        if (category === 'all' || itemCategory === category) {
-            item.style.display = 'block';
+    categorySections.forEach(section => {
+        const sectionCategory = section.getAttribute('data-category');
+        if (category === 'all' || sectionCategory === category) {
+            section.style.display = 'block';
         } else {
-            item.style.display = 'none';
-        }
-    });
-    
-    const categoryButtons = document.querySelectorAll('.category-btn');
-    categoryButtons.forEach(button => {
-        if (button.getAttribute('data-category') === category) {
-            button.classList.add('bg-orange-500', 'text-white');
-            button.classList.remove('bg-gray-200', 'text-gray-800');
-        } else {
-            button.classList.remove('bg-orange-500', 'text-white');
-            button.classList.add('bg-gray-200', 'text-gray-800');
+            section.style.display = 'none';
         }
     });
 }
 
 /**
- * Search functionality
+ * Search functionality (not used in current HTML, but included for future use)
  * @param {string} query - Search query
  */
 function searchSite(query) {
@@ -765,15 +743,15 @@ function searchSite(query) {
         return;
     }
     
-    const menuItems = document.querySelectorAll('.menu-item');
+    const menuItems = document.querySelectorAll('.category-section .flex, .menu-card');
     let hasResults = false;
     
     menuItems.forEach(item => {
-        const itemName = item.querySelector('h3').textContent.toLowerCase();
-        const itemDescription = item.querySelector('p').textContent.toLowerCase();
+        const itemName = item.querySelector('h4')?.textContent.toLowerCase() || item.querySelector('h3')?.textContent.toLowerCase();
+        const itemDescription = item.querySelector('p')?.textContent.toLowerCase();
         
-        if (itemName.includes(query.toLowerCase()) || itemDescription.includes(query.toLowerCase())) {
-            item.style.display = 'block';
+        if (itemName && (itemName.includes(query.toLowerCase()) || (itemDescription && itemDescription.includes(query.toLowerCase())))) {
+            item.parentElement.style.display = 'block';
             hasResults = true;
         } else {
             item.style.display = 'none';
