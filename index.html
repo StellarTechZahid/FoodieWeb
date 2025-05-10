@@ -3473,245 +3473,218 @@
         </div>
       </main>
 
+
+
+
+
+
       <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cart - FoodieApp</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodieApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .tab-content { display: none; }
+        .active-tab { display: block; }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans">
-  <!-- Header -->
-  <header class="bg-white shadow">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-orange-500">FoodieApp</h1>
-      <nav>
-        <ul class="flex space-x-6">
-          <li><a href="#" class="text-gray-600 hover:text-orange-500">Home</a></li>
-          <li><a href="#" class="text-gray-600 hover:text-orange-500">Menu</a></li>
-          <li><a href="#" class="text-gray-600 hover:text-orange-500">About</a></li>
-          <li><a href="#" class="text-gray-600 hover:text-orange-500">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Cart Section -->
-  <section class="py-12">
-    <div class="container mx-auto px-4">
-      <h1 class="text-3xl font-bold mb-8 text-center">Your Cart</h1>
-
-      <div class="flex flex-col md:flex-row gap-8">
-        <!-- Cart Items and Details -->
-        <div class="md:w-2/3">
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-            <div class="p-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4">Cart Items</h2>
-              <div id="cart-items" class="space-y-6">
-                <!-- Sample Cart Item -->
-                <div class="flex items-center justify-between border-b pb-4">
-                  <div class="flex items-center space-x-4">
-                    <div class="w-20 h-20 bg-gray-200 flex items-center justify-center rounded">
-                      <span class="text-gray-600">Item Image</span>
-                    </div>
-                    <div>
-                      <h3 class="text-lg font-bold text-gray-800">Chicken Biryani</h3>
-                      <p class="text-gray-600">Authentic Pakistani Chicken Biryani with spices</p>
-                      <p class="text-sm text-gray-500">Add-ons: Raita (+$1.00)</p>
-                    </div>
-                  </div>
-                  <div class="flex items-center space-x-6">
-                    <div class="flex items-center space-x-2">
-                      <button class="text-gray-600 hover:text-orange-500">-</button>
-                      <span class="text-gray-800">1</span>
-                      <button class="text-gray-600 hover:text-orange-500">+</button>
-                    </div>
-                    <p class="text-gray-800 font-bold">$12.99</p>
-                    <button class="text-red-500 hover:text-red-700">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <!-- Navbar -->
+    <nav class="bg-white dark:bg-gray-800 shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-orange-500">FoodieApp</a>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="hover:text-orange-500" onclick="showTab('home'); return false;">Home</a>
+                <a href="menu-tab" class="hover:text-orange-500">Menu</a>
+                <div class="relative">
+                    <a href="#" class="ml-4 relative" onclick="showTab('cart'); return false;">
+                        <i class="fas fa-shopping-cart text-xl hover:text-orange-500"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-orange-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
+                    </a>
                 </div>
-                <!-- Empty Cart Message -->
-                <div id="empty-cart-message" class="hidden text-center text-gray-600 py-8">
-                  <p>Your cart is empty. Start adding some delicious items!</p>
-                  <a href="#" class="text-orange-500 hover:text-orange-600 font-bold">Browse Menu</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Delivery Information -->
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-            <div class="p-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4">Delivery Information</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-gray-600 mb-2">Full Name</label>
-                  <input type="text" class="w-full border rounded-lg p-2" placeholder="Enter your name">
-                </div>
-                <div>
-                  <label class="block text-gray-600 mb-2">Phone Number</label>
-                  <input type="tel" class="w-full border rounded-lg p-2" placeholder="Enter your phone number">
-                </div>
-                <div class="md:col-span-2">
-                  <label class="block text-gray-600 mb-2">Delivery Address</label>
-                  <input type="text" class="w-full border rounded-lg p-2" placeholder="Enter your full address">
-                </div>
-                <div class="md:col-span-2">
-                  <label class="block text-gray-600 mb-2">Additional Instructions</label>
-                  <textarea class="w-full border rounded-lg p-2" placeholder="E.g., Call before delivery" rows="3"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Payment Method -->
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="p-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4">Payment Method</h2>
-              <div class="space-y-4">
-                <div class="flex items-center">
-                  <input type="radio" name="payment" id="cod" class="mr-2">
-                  <label for="cod" class="text-gray-600">Cash on Delivery</label>
-                </div>
-                <div class="flex items-center">
-                  <input type="radio" name="payment" id="online" class="mr-2">
-                  <label for="online" class="text-gray-600">Online Payment</label>
-                </div>
-                <!-- Online Payment Fields (Hidden by Default) -->
-                <div id="online-payment-fields" class="hidden space-y-4 mt-4">
-                  <div>
-                    <label class="block text-gray-600 mb-2">Card Number</label>
-                    <input type="text" class="w-full border rounded-lg p-2" placeholder="1234 5678 9012 3456">
-                  </div>
-                  <div class="grid grid-cols-2 gap-4">
-                    <div>
-                      <label class="block text-gray-600 mb-2">Expiry Date</label>
-                      <input type="text" class="w-full border rounded-lg p-2" placeholder="MM/YY">
-                    </div>
-                    <div>
-                      <label class="block text-gray-600 mb-2">CVV</label>
-                      <input type="text" class="w-full border rounded-lg p-2" placeholder="123">
-                    </div>
-                  </div>
-                  <!-- Payment Gateway Placeholder -->
-                  <!-- TODO: Update with actual payment gateway integration (e.g., Stripe, PayPal) -->
-                  <p class="text-gray-500 text-sm">Secure payment powered by [Your Payment Gateway]</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="md:w-1/3">
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden sticky top-4">
-            <div class="p-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4">Order Summary</h2>
-              <div class="space-y-4">
-                <div class="flex justify-between">
-                  <p class="text-gray-600">Subtotal</p>
-                  <p class="text-gray-800">$12.99</p>
-                </div>
-                <div class="flex justify-between">
-                  <p class="text-gray-600">Delivery Fee</p>
-                  <p class="text-gray-800">$2.50</p>
-                </div>
-                <div class="flex justify-between">
-                  <p class="text-gray-600">Tax</p>
-                  <p class="text-gray-800">$1.30</p>
-                </div>
-                <div class="flex justify-between font-bold text-gray-800">
-                  <p>Total</p>
-                  <p class="text-orange-500">$16.79</p>
-                </div>
-              </div>
-              <div class="mt-6">
-                <input type="text" class="w-full border rounded-lg p-2 mb-4" placeholder="Apply Promo Code">
-                <button class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition duration-300">
-                  Apply Promo
+                <button id="dark-mode-toggle" class="focus:outline-none">
+                    <i class="fas fa-moon"></i>
                 </button>
-              </div>
-              <button class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition duration-300 mt-4">
-                Proceed to Checkout
-              </button>
+                <button id="menu-icon" class="md:hidden focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-          </div>
         </div>
-      </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800">
+            <a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white" onclick="showTab('home'); return false;">Home</a>
+            <a href="menu-tab" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Menu</a>
+            <a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white" onclick="showTab('cart'); return false;">Cart</a>
+        </div>
+    </nav>
+
+    <!-- Tabbed Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Home Tab -->
+        <div id="home-tab" class="tab-content active-tab">
+            <section class="bg-gradient-to-r from-orange-500 to-yellow-500 py-16 text-white">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-col-reverse lg:flex-row items-center">
+                        <div class="lg:w-1/2 mt-8 lg:mt-0">
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Welcome to FoodieApp</h1>
+                            <p class="text-lg mb-6">Order delicious meals with ease!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Cart Tab -->
+        <div id="cart-tab" class="tab-content">
+            <h1 class="text-3xl font-bold mb-8">Your Cart</h1>
+
+            <!-- Empty Cart Message -->
+            <div id="empty-cart-message" class="hidden text-center text-gray-600 dark:text-gray-400">
+                <p class="text-xl">Your cart is empty.</p>
+                <a href="menu-tab" class="text-orange-500 hover:underline">Continue Shopping</a>
+            </div>
+
+            <!-- Cart Items -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div id="cart-items" class="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"></div>
+
+                <!-- Order Summary and Checkout -->
+                <div id="order-form" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                    <!-- Order Summary -->
+                    <div class="order-summary">
+                        <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+                        <div class="flex justify-between py-2">
+                            <p>Subtotal</p>
+                            <p id="cart-subtotal">$0.00</p>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <p>Delivery Fee</p>
+                            <p id="delivery-fee">$0.00</p>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <p>Tax (10%)</p>
+                            <p id="tax-amount">$0.00</p>
+                        </div>
+                        <div class="flex justify-between py-2 border-t pt-4 font-bold">
+                            <p>Total</p>
+                            <p id="cart-total">$0.00</p>
+                        </div>
+                    </div>
+
+                    <!-- Promo Code -->
+                    <div class="mt-6">
+                        <label for="promo-code-input" class="block text-sm font-medium">Promo Code</label>
+                        <div class="flex mt-1">
+                            <input type="text" id="promo-code-input" class="flex-1 border rounded-l-lg p-2 dark:bg-gray-700 dark:border-gray-600" placeholder="Enter promo code">
+                            <button id="apply-promo-btn" class="bg-orange-500 text-white px-4 rounded-r-lg hover:bg-orange-600">Apply</button>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Information -->
+                    <div class="mt-6">
+                        <h2 class="text-xl font-bold mb-4">Delivery Information</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="customer-name" class="block text-sm font-medium">Full Name</label>
+                                <input type="text" id="customer-name" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600" required>
+                            </div>
+                            <div>
+                                <label for="customer-phone" class="block text-sm font-medium">Phone Number</label>
+                                <input type="tel" id="customer-phone" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600" required>
+                            </div>
+                            <div>
+                                <label for="customer-address" class="block text-sm font-medium">Delivery Address</label>
+                                <textarea id="customer-address" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600" rows="4" required></textarea>
+                            </div>
+                            <div>
+                                <label for="order-notes" class="block text-sm font-medium">Order Notes (Optional)</label>
+                                <textarea id="order-notes" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="mt-6">
+                        <h2 class="text-xl font-bold mb-4">Payment Method</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <input type="radio" id="cod" name="payment-method" value="cod" class="mr-2">
+                                <label for="cod">Cash on Delivery</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="online" name="payment-method" value="online" class="mr-2">
+                                <label for="online">Online Payment</label>
+                            </div>
+                        </div>
+
+                        <!-- Online Payment Fields -->
+                        <div id="online-payment-fields" class="hidden mt-4 space-y-4">
+                            <div>
+                                <input type="radio" id="jazzcash" name="online-payment-method" value="jazzcash" class="mr-2">
+                                <label for="jazzcash">JazzCash</label>
+                            </div>
+                            <div id="jazzcash-fields" class="hidden ml-6">
+                                <label for="jazzcash-number" class="block text-sm font-medium">JazzCash Number</label>
+                                <input type="text" id="jazzcash-number" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600">
+                            </div>
+                            <div>
+                                <input type="radio" id="easypaisa" name="online-payment-method" value="easypaisa" class="mr-2">
+                                <label for="easypaisa">EasyPaisa</label>
+                            </div>
+                            <div id="easypaisa-fields" class="hidden ml-6">
+                                <label for="easypaisa-number" class="block text-sm font-medium">EasyPaisa Number</label>
+                                <input type="text" id="easypaisa-number" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600">
+                            </div>
+                            <div>
+                                <input type="radio" id="card" name="online-payment-method" value="card" class="mr-2">
+                                <label for="card">Credit/Debit Card</label>
+                            </div>
+                            <div id="card-fields" class="hidden ml-6 space-y-4">
+                                <div>
+                                    <label for="card-number" class="block text-sm font-medium">Card Number</label>
+                                    <input type="text" id="card-number" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600">
+                                </div>
+                                <div class="flex space-x-4">
+                                    <div class="flex-1">
+                                        <label for="card-expiry" class="block text-sm font-medium">Expiry Date</label>
+                                        <input type="text" id="card-expiry" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600" placeholder="MM/YY">
+                                    </div>
+                                    <div class="flex-1">
+                                        <label for="card-cvv" class="block text-sm font-medium">CVV</label>
+                                        <input type="text" id="card-cvv" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    <button id="checkout-btn" class="w-full mt-6 bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition duration-300">Place Order</button>
+                </div>
+
+                <!-- Order Confirmation -->
+                <div id="order-confirmation" class="hidden col-span-3 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center">
+                    <h2 class="text-2xl font-bold mb-4">Order Confirmed!</h2>
+                    <p class="text-lg">Thank you for your order. Your order number is <span id="order-number" class="font-bold"></span>.</p>
+                    <p class="mt-4">You'll receive a confirmation soon.</p>
+                    <a href="menu-tab" class="mt-6 inline-block bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="bg-white shadow py-8">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div>
-          <h3 class="text-lg font-bold text-orange-500 mb-4">FoodieApp</h3>
-          <p class="text-gray-600">Bringing authentic Pakistani flavors to your doorstep.</p>
-        </div>
-        <div>
-          <h3 class="text-lg font-bold text-orange-500 mb-4">Quick Links</h3>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-gray-600 hover:text-orange-500">Home</a></li>
-            <li><a href="#" class="text-gray-600 hover:text-orange-500">Menu</a></li>
-            <li><a href="#" class="text-gray-600 hover:text-orange-500">About</a></li>
-            <li><a href="#" class="text-gray-600 hover:text-orange-500">Contact</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="text-lg font-bold text-orange-500 mb-4">Follow Us</h3>
-          <div class="flex space-x-4">
-            <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-facebook"></i></a>
-            <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="mt-8 text-center text-gray-600">
-        <p>© 2025 FoodieApp. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-</html>
-
-
-
-      <footer class="bg-gray-800 text-white py-6">
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-4 text-center">
-          <p>© 2025 Desi Food Restaurant. All rights reserved.</p>
+            <p>© 2025 FoodieApp. All rights reserved.</p>
         </div>
-      </footer>
+    </footer>
 
-      <script>
-        document.getElementById('category-filter').addEventListener('change', function () {
-          const selectedCategory = this.value;
-          const categorySections = document.querySelectorAll('.category-section');
-
-          categorySections.forEach(section => {
-            if (selectedCategory === 'all' || section.getAttribute('data-category') === selectedCategory) {
-              section.style.display = 'block';
-            } else {
-              section.style.display = 'none';
-            }
-          });
-        });
-
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-          button.addEventListener('click', function () {
-            const itemName = this.parentElement.querySelector('h4').textContent;
-            alert(`${itemName} added to cart!`);
-          });
-        });
-      </script>
-    </body>
-  </html>
-
-<script src="foodieapp.js"></script>
+    <script src="foodieapp.js"></script>
 </body>
+</html>
 
 
       <footer class="bg-gray-800 text-white py-6">
